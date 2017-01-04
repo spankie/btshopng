@@ -9,14 +9,21 @@
 .secondary-text-color  { color: #757575; }
 .divider-color         { border-color: #BDBDBD; }
 
+hr.light {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.user {
+    vertical-align: middle;
+}
+
 textarea {
     min-width: inherit;
     max-width: 35rem;
     max-height: 150px;
-}
-
-.bid {
-    box-shadow: 0px 2px 6px lightgray;
 }
 
 @media screen and (max-width: 850px) {
