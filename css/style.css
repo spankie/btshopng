@@ -9,6 +9,10 @@
 .secondary-text-color  { color: #757575; }
 .divider-color         { border-color: #BDBDBD; }
 
+.head h2 {
+    color: #757575;
+}
+
 hr.light {
     border: 0;
     height: 0;
@@ -16,8 +20,8 @@ hr.light {
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.user {
-    vertical-align: middle;
+.v-align {
+    vertical-align: middle !important;
 }
 
 textarea {
