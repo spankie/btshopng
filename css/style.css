@@ -9,6 +9,13 @@
 .secondary-text-color  { color: #757575; }
 .divider-color         { border-color: #BDBDBD; }
 
+.primary{
+  //color:#3D818F;
+  color:#303F9F;
+}
+.bg-primary{
+  background-color: #303F9F;
+}
 textarea {
     min-width: inherit;
     max-width: 35rem;
