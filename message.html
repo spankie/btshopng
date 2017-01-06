@@ -31,58 +31,91 @@
         </nav>
 
         <div class="head ph0 ph5-m ph6-l ma2">
-            <h2>Messages</h2>
-        </div><hr class="light">
+            <h2 class="secondary-text-color">Messages</h2>
+        </div>
+        
+        <hr class="light">
 
-        <div class="msg_body ph0 ph5-m ph6-l cf">
-            <div class="msg_summary fl w-30 pa2">
-
-                <div class="shadow-4 pa1 cf">
-                    <div class="dib">
-                        <img src="img/logo.png" width="30" height="30" class="v-align br-100 b--black-10">
-                        <p class="dib v-align">Username</p>
-                    </div>
-                    <span class="v-align fw1 f6 secondary-text-color">4/01/2017</span>
-                    <hr class="light mt1">
-                    <div class="pa1 secondary-text-color">
-                        Hello i am spankie dee, just testing this div to see how it handles long text
-                    </div>
-                </div>
-
-                <hr class="light mv2">
-
-                <div class="shadow-4 pa1 cf">
-                    <div class="dib">
-                        <img src="img/logo.png" width="30" height="30" class="v-align br-100 b--black-10">
-                        <p class="dib v-align">Username</p>
-                    </div>
-                    <span class="v-align fw1 f6 secondary-text-color">4/01/2017</span>
-                    <hr class="light mt1">
-                    <div class="pa1 secondary-text-color">
-                        Hello i am spankie dee, just testing this div to see how it handles long text
-                    </div>
-                </div>
-            </div>
-
+        <div class="msg_body ph0 ph5-m ph6-l cf mw-80-m">
             
+            <div class="msgs_summary fl w-30 pa2">
 
-            <div class="msg_chat fl w-70 pa2 light-primary-color">
-                <div class="pa1">
+                <!-- each message summary on the side -->
+                <div class="msg_summary msg_active shadow-4 pa1 cf bt b--black-30" id="00">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <!--<hr class="light mv2">-->
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30 unread" id="01">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30" id="02">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30" id="03">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="msg_chat fl w-70 pa2">
+
+                <div class="pa1 ba b--black-20">
                     
                     <div class="chat ba b--black-20 pa2">
-                        <p>> Hello!</p>
-                        <p>> Hi</p>
-                        <p>> How are you?</p>
-                        <p>> I am fine, how are you too?</p>
-                        <p>> I am doing great</p>
+                        <div class="cf"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">Hello!</p></div>
+                        <div class="cf"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">Hi</p></div>
+                        <div class="cf"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">How are you?</p></div>
+                        <div class="cf"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">I am fine, how are you too?</p></div>
+                        <div class="cf"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">I am doing great</p></div>
                     </div>
+
                     <div class="reply mt2 cf">
                         <p class="w-100"><input class="pa1 ba b--black-20 br2 w-80" type="text" name="reply" placeholder="Reply">
-                        <input class="ph2 pv1 dark-primary-color text-primary-color ba br2 fr" type="submit" name="submit_reply" value="Send"></p>
+                        <input class="ph2 pv1 dark-primary-color text-primary-color ba b--black-05 br2 fr" type="submit" name="submit_reply" value="Send"></p>
                     </div>
+
                     <hr class="light mv2">
+
                 </div>
+
             </div>
+
         </div>
 
         <!--/*<script src="js/scripts.js"></script>*/-->
