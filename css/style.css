@@ -9,10 +9,23 @@
 .secondary-text-color  { color: #757575; }
 .divider-color         { border-color: #BDBDBD; }
 
-.primary{
-  //color:#3D818F;
-  color:#303F9F;
+hr.light {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
+
+.bid_text {
+    min-width: 85%;
+    max-width: 90%;
+}
+
+.primary {
+  //color:#3D818F;
+  color: #303F9F;
+}
+
 .bg-primary{
   background-color: #303F9F;
 }
@@ -22,12 +35,56 @@ textarea {
     max-height: 150px;
 }
 
-.bid {
-    box-shadow: 0px 2px 6px lightgray;
+.chat {
+    /*height: 100px;*/
+    overflow-y: auto;
+}
+
+.msgs_summary {
+    /*height: 200px;*/
+    overflow-y: auto;
+}
+
+.msg {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.bubble_notme {
+    border-bottom-left-radius: 0px;
+    float: left;
+}
+
+.bubble_me {
+    border-bottom-right-radius: 0px;
+    float: right;
+}
+
+.msg_active {
+    background: #3F51B5;
+}
+
+.msg_active:hover {
+    background: #3F51B5 !important;
+}
+
+.unread {
+    background: whitesmoke;
+}
+
+.msg_active * { color: white; }
+
+.msg_summary {
+    cursor: pointer;
+}
+
+.msg_summary:hover {
+    background: whitesmoke;
 }
 
 @media screen and (max-width: 850px) {
-    textarea {
+    .bid_text {
         min-width: inherit;
         max-width: 85%;
         max-height: 150px;
@@ -46,7 +103,7 @@ textarea {
 }
 
 @media screen and (max-width: 650px) {
-    textarea {
+    .bid_text {
         min-width: 100%;
         max-width: 100%;
         max-height: 150px;
