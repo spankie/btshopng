@@ -19,6 +19,19 @@ hr.light {
 .bid_text {
     min-width: 85%;
     max-width: 90%;
+}
+
+.primary {
+  //color:#3D818F;
+  color: #303F9F;
+}
+
+.bg-primary{
+  background-color: #303F9F;
+}
+textarea {
+    min-width: inherit;
+    max-width: 35rem;
     max-height: 150px;
 }
 
