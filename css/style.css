@@ -27,93 +27,47 @@ hr.light {
 }
 
 .bg-primary{
-  background-color: #303F9F;
-}
-textarea {
-    min-width: inherit;
-    max-width: 35rem;
-    max-height: 150px;
+  background: #303F9F;
 }
 
-.chat {
-    /*height: 100px;*/
-    overflow-y: auto;
+.primary{
+  color: #303F9F;
+}
+.secondary{
+  color:#BF0311;
 }
 
-.msgs_summary {
-    /*height: 200px;*/
-    overflow-y: auto;
+.bg-secondary{
+  background-color:#BF0311;
 }
 
-.msg {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+.hover-primary:hover{
+  color:#BF0311;
 }
 
-.bubble_notme {
-    border-bottom-left-radius: 0px;
-    float: left;
+@media screen and (min-width: 450px) {
+    .bg-white-ns{
+      background-color: #fff;
+    }
 }
 
-.bubble_me {
-    border-bottom-right-radius: 0px;
-    float: right;
-}
-
-.msg_active {
-    background: #3F51B5;
-}
-
-.msg_active:hover {
-    background: #3F51B5 !important;
-}
-
-.unread {
-    background: whitesmoke;
-}
-
-.msg_active * { color: white; }
-
-.msg_summary {
-    cursor: pointer;
-}
-
-.msg_summary:hover {
-    background: whitesmoke;
-}
-
-.msg_chat {
-    /*height: 100% !important;*/
-}
+/*Please use classes instead of styling elements that would be used everywhere.eg, you gave textarea a max width everywhere*/
 
 @media screen and (max-width: 850px) {
-    .bid_text {
-        min-width: inherit;
-        max-width: 85%;
-        max-height: 150px;
-    }
-    /*nav.ph6 {
+    
+    nav.ph6 {
         padding-left: 4rem;
         padding-right: 4rem;
-    }*/
+    }
 }
 
 @media screen and (max-width: 750px) {
-    /*nav.ph6 {
+    nav.ph6 {
         padding-left: 2rem;
         padding-right: 2rem;
-    }*/
+    }
 }
 
 @media screen and (max-width: 650px) {
-    .bid_text {
-        min-width: 100%;
-        max-width: 100%;
-        max-height: 150px;
-    }
-    /*nav.ph6 {
-        padding-left: 0;
-        padding-right: 0;
-    }*/
+    
 }
