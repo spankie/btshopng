@@ -83,6 +83,10 @@ textarea {
     background: whitesmoke;
 }
 
+.msg_chat {
+    /*height: 100% !important;*/
+}
+
 @media screen and (max-width: 850px) {
     .bid_text {
         min-width: inherit;
