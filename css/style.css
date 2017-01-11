@@ -28,6 +28,12 @@
   color:#BF0311;
 }
 
+@media screen and (min-width: 450px) {
+    .bg-white-ns{
+      background-color: #fff;
+    }
+}
+
 //Please use classes instead of styling elements that would be used everywhere.eg, you gave textarea a max width everywhere
 /*textarea {
     min-width: inherit;
