@@ -27,7 +27,9 @@
 .hover-primary:hover{
   color:#BF0311;
 }
-textarea {
+
+//Please use classes instead of styling elements that would be used everywhere.eg, you gave textarea a max width everywhere
+/*textarea {
     min-width: inherit;
     max-width: 35rem;
     max-height: 150px;
@@ -43,17 +45,17 @@ textarea {
         max-width: 85%;
         max-height: 150px;
     }
-    /*nav.ph6 {
+    nav.ph6 {
         padding-left: 4rem;
         padding-right: 4rem;
-    }*/
+    }
 }
 
 @media screen and (max-width: 750px) {
-    /*nav.ph6 {
+    nav.ph6 {
         padding-left: 2rem;
         padding-right: 2rem;
-    }*/
+    }
 }
 
 @media screen and (max-width: 650px) {
@@ -66,4 +68,4 @@ textarea {
         padding-left: 0;
         padding-right: 0;
     }*/
-}
+}*/
