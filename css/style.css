@@ -55,6 +55,20 @@ hr.light {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.unread {
+    background-color: #f4f4f4;
+}
+
+.msg_summary:hover {
+    cursor: pointer;
+    background-color: #fafafa;
+}
+
+.chat {
+    /*box-shadow: inset 0 1px 2px 1px #333;*/
+}
+
 @media screen and (min-width: 450px) {
     .bg-white-ns{
       background-color: #fff;
