@@ -20,7 +20,31 @@
     </head>
 
     <body class="">
-        <nav class="dark-primary-color flex justify-between bb b--white-10 ph0 ph5-m ph6-l">
+        <!-- main nav -->
+        <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
+          <div class="w-100 db ph5 cf">
+            <div class="fl v-mid dib">
+              <a class="link black  dib ph3 dim" href="#">
+                  Btshopng
+              </a>
+            </div>
+            <div class="fr v-mid dib">
+              <form class="dib v-mid">
+                <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
+                <button class="link bg-black white  dib v-mid pa2 bw0">
+                  <img src="img/search.svg" style="width:18px" class="dib"/>
+                </button>
+              </form>
+              <a class="link black  dib ph3 dim" href="#">Home</a>
+              <a class="link black  dib v-mid ph3 dim" href="#">
+                <img src="img/user.svg" style="width:32px" class="dib ph2"/>
+                <span class="dib">login/<br/>signup</span></a>
+            </div>
+          </div>
+        </nav>
+        <!-- End main nav -->
+
+        <!--<nav class="dark-primary-color flex justify-between bb b--white-10 ph0 ph5-m ph6-l">
             <a class="link white-60 hover-white no-underline items-center pa3" href="#">
                 <h3 class="">Btshopng</h3>
             </a>
@@ -30,17 +54,20 @@
                 <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20 mr3 mr4-ns" href="#0">Sign Up</a>
                 <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20 mr3 mr4-ns" href="#0">Login</a>
             </div>
-        </nav>
-
-        <div class="head ph0 ph5-m ph6-l ma2">
-            <h2 class="secondary-text-color">Messages</h2>
+        </nav>-->
+<!--<br><br><br><br><br>-->
+        <div class="head ph0 ph5-m ph6-l pt5 pb2 bg-gray">
+            <div class="ph3">
+                <h2 class="text-primary-color f2">Messages</h2>
+            </div>
         </div>
 
         <hr class="light">
 
-        <div class="msg_body ph0 ph5-m ph6-l cf mw-80-m h-75">
+        <div class="msg_body ph0 ph5-m ph6-l cf mw-80-m mb3" style="height: 450px">
             
-            <div class="msgs_summary fl w-30-ns w-100 pa2">
+            <!--<div class="msgs_summary fl w-100 w-40-m w-30-ns pa2" style="height: 100%; overflow: auto">-->
+            <div class="msgs_summary fl w4 w-30-ns pa2" style="height: 100%; overflow: auto">
 
                 <!-- each message summary on the side -->
                 <div class="msg_summary msg_active shadow-4 pa1 cf bt b--black-30" id="00">
@@ -50,7 +77,7 @@
                     </div>
                     <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
                     <hr class="light mt1">
-                    <div class="msg pa1 secondary-text-color">
+                    <div class="msg pa1 secondary-text-color f6">
                         Hello i am spankie dee, just testing this div to see how it handles long text
                     </div>
                 </div>
@@ -64,7 +91,7 @@
                     </div>
                     <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
                     <hr class="light mt1">
-                    <div class="msg pa1 secondary-text-color">
+                    <div class="msg pa1 secondary-text-color f6">
                         Hello i am spankie dee, just testing this div to see how it handles long text
                     </div>
                 </div>
@@ -76,7 +103,7 @@
                     </div>
                     <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
                     <hr class="light mt1">
-                    <div class="msg pa1 secondary-text-color">
+                    <div class="msg pa1 secondary-text-color f6">
                         Hello i am spankie dee, just testing this div to see how it handles long text
                     </div>
                 </div>
@@ -88,45 +115,157 @@
                     </div>
                     <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
                     <hr class="light mt1">
-                    <div class="msg pa1 secondary-text-color">
+                    <div class="msg pa1 secondary-text-color f6">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30" id="03">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color f6">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30" id="03">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color f6">
+                        Hello i am spankie dee, just testing this div to see how it handles long text
+                    </div>
+                </div>
+
+                <div class="msg_summary shadow-4 pa1 cf bt b--black-30" id="03">
+                    <div class="dib">
+                        <img src="img/logo.png" width="30" height="30" class="v-mid br-100 b--black-10">
+                        <p class="dib v-mid">Username</p>
+                    </div>
+                    <span class="v-mid fw1 f6 secondary-text-color">4/01/2017</span>
+                    <hr class="light mt1">
+                    <div class="msg pa1 secondary-text-color f6">
                         Hello i am spankie dee, just testing this div to see how it handles long text
                     </div>
                 </div>
 
             </div>
             
-            <div class="msg_chat fl w-70 pa2 dn db-ns">
+            <div class="msg_chat fl w-70 w-60-ns pa2 dn db-ns" style="height: 100%">
 
-                <div class="pa1 ba b--black-20">
+                <div class="pa1 ba b--black-20" style="height: 100%">
 
-                    <div class="chat ba b--black-20 pa2">
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">Hello!</p></div>
+                    <div class="chat ba b--black-20 pa2" style="height: 80%; overflow: auto">
+                        <div class="pa1">
+                            <div class="cf">
+                                <div class="h-100 fl mr2">
+                                    <img src="img/logo.png" width="30" height="30" class="v-mid">
+                                </div>
+                                <div class="fl">
+                                    <p class="primary">Username</p>
+                                    <p class="f6">Hello</p>
+                                    <p class="f6">How are you</p>
+                                </div>
+                                <div class="fr">
+                                    <p class="secondary-text-color f6">01/01/2017</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="light mv1">
+
+                        <div class="pa1">
+                            <div class="cf">
+                                <div class="h-100 fl mr2">
+                                    <img src="img/logo.png" width="30" height="30" class="v-mid">
+                                </div>
+                                <div class="fl">
+                                    <p class="primary">Username</p>
+                                    <p class="f6">Good day</p>
+                                    <p class="f6">I'm fine and you?</p>
+                                </div>
+                                <div class="fr">
+                                    <p class="secondary-text-color f6">01/01/2017</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="light mv1">
+
+                        <div class="pa1">
+                            <div class="cf">
+                                <div class="h-100 fl mr2">
+                                    <img src="img/logo.png" width="30" height="30" class="v-mid">
+                                </div>
+                                <div class="fl">
+                                    <p class="primary">Username</p>
+                                    <p class="f6">Good day</p>
+                                    <p class="f6">I'm fine and you?</p>
+                                </div>
+                                <div class="fr">
+                                    <p class="secondary-text-color f6">01/01/2017</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="light mv1">
+
+                        <div class="pa1">
+                            <div class="cf">
+                                <div class="h-100 fl mr2">
+                                    <img src="img/logo.png" width="30" height="30" class="v-mid">
+                                </div>
+                                <div class="fl">
+                                    <p class="primary">Username</p>
+                                    <p class="f6">Good day</p>
+                                    <p class="f6">I'm fine and you?</p>
+                                </div>
+                                <div class="fr">
+                                    <p class="secondary-text-color f6">01/01/2017</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="light mv1">
+
+                        <div class="pa1">
+                            <div class="cf">
+                                <div class="h-100 fl mr2">
+                                    <img src="img/logo.png" width="30" height="30" class="v-mid">
+                                </div>
+                                <div class="fl">
+                                    <p class="primary">Username</p>
+                                    <p class="f6">Good day</p>
+                                    <p class="f6">I'm fine and you?</p>
+                                </div>
+                                <div class="fr">
+                                    <p class="secondary-text-color f6">01/01/2017</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="light mv1">
+                        <!--<div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">Hello!</p></div>
                         <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">Hi</p></div>
                         <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">How are you?</p></div>
                         <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">I am fine, how are you too?</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">I am doing great</p></div>
-
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">Hello!</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">Hi</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">How are you?</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">I am fine, how are you too?</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">I am doing great</p></div>
-
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">Hello!</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">Hi</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">How are you?</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_me dib ba br3 b--light-red shadow-4 pa2">I am fine, how are you too?</p></div>
-                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">I am doing great</p></div>
+                        <div class="cf pa1"><p class="bubble bubble_notme dib ba br4 b--light-red shadow-4 pa2">I am doing great</p></div>-->
                     </div>
 
-                    <div class="reply mt2 cf">
-                        <p class="w-100">
-                            <input class="pa1 ba b--black-20 br2 w-100 mb1" type="text" name="reply" placeholder="Reply">
+                    <div class="reply mt2 cf w-100" style="height: 20%;">
+                        <p class="w-100 cf">
+                            <input class="pa1 ba b--black-20 br2 w-100 mb1 h2" type="text" name="reply" placeholder="Reply">
                             <input class="ph2 pv1 dark-primary-color text-primary-color ba b--black-05 br2 fr" type="submit" name="submit_reply" value="Send">
                         </p>
                     </div>
 
-                    <hr class="light mv2">
+                    <!--<hr class="light mv1">-->
 
                 </div>
 
@@ -134,6 +273,25 @@
 
         </div>
 
-        <!--/*<script src="js/scripts.js"></script>*/-->
+        <section class=" bg-black gray ">
+          <div class="tc pa4 pb2">
+            <a href="/" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Home</a>
+            <a href="/plusListings" style=" font-size:0.7rem;" class="f6 fw1 tracked  light-gray link ph3">Battershop</a>
+            <a href="/adverts" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">About us</a>
+            <a href="/privacy_policy" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Frequently Asked Questions</a>
+          </div>
+           <div class="tc pa4">
+              <span style=" font-size:0.7rem;" class="f6 fw1 tracked fl light-gray">© Battershop 2016</span>
+              <span class="f6 fr" style="font-size:0.6rem;" >  made with
+              <span class="red" font-size:0.7rem;>❤</span>  by
+              <a href="http://past3.com.ng/" class="link light-gray fw1 tracked">Past 3 Software and Design Studio</a>
+              </span>
+           </div>
+           <div style="clear:both"></div>
+        </section>
+        <!--End Footer -->
+
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/lightbox.min.js"></script>
     </body>
 </html>

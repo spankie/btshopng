@@ -45,6 +45,16 @@ hr.light {
   color:#BF0311;
 }
 
+.w6 {
+    width: 30rem;
+}
+
+.msg {
+    /*width: 250px;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 @media screen and (min-width: 450px) {
     .bg-white-ns{
       background-color: #fff;
