@@ -17,8 +17,8 @@ hr.light {
 }
 
 .bid_text {
-    min-width: 85%;
-    max-width: 90%;
+    max-width: 100%;
+    max-height: 200px;
 }
 
 .primary {
