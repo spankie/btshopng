@@ -9,6 +9,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// template of signup/signin page to be served
 var tmpl = template.Must(template.New("signin_signup.html").ParseFiles("../signin_signup.html"))
 
 // User interface to contains user information
@@ -42,11 +43,13 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		// connect to mongodb server
 		var session, err = mgo.Dial("mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng")
 		if err != nil {
+			// reply with internal server error
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
 		// get the post form values
 		r.ParseForm()
+		// new struct containing the form values
 		newUser := &User{name: r.PostFormValue("name"), email: r.PostFormValue("email"), password: r.PostFormValue("passwd")}
 
 		// create a db connection
