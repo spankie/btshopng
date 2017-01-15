@@ -10,10 +10,10 @@
         <meta name="description" content="Item">
         <meta name="author" content="btshopng">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/tachyons.min.css"/>
-        <link rel="stylesheet" href="css/lightbox.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/public/css/normalize.css">
+        <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
+        <link rel="stylesheet" href="/public/css/lightbox.min.css">
+        <link rel="stylesheet" href="/public/css/style.css">
 
         <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -33,23 +33,24 @@
               <form class="dib v-mid">
                 <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
                 <button class="link bg-black white  dib v-mid pa2 bw0">
-                  <img src="/img/search.svg" style="width:18px" class="dib"/>
+                  <img src="/public/img/search.svg" style="width:18px" class="dib"/>
                 </button>
               </form>
               <a class="link black  dib ph3 dim" href="/">Home</a>
-              <a class="link black  dib v-mid ph3 dim" href="/signin_signup.html">
-                <img src="/img/user.svg" style="width:32px" class="dib ph2"/>
+              <a class="link black  dib v-mid ph3 dim" href="/signup">
+                <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
                 <span class="dib">login/<br/>signup</span></a>
             </div>
           </div>
         </nav>
         <!-- End main nav -->
-        <section class="bg-gray vh-50 cover " style="background-image:url('/img/hero4.jpg');">
+        <section class="bg-gray vh-50 cover " style="background-image:url('/public/img/hero4.jpg');">
           <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
             <div class="w-70-ns dib white  cf h4">
               <img src="//placehold.it/200x200" style="width:200px; height:200px;" class="br-100  dib v-mid bg-gray ba white mr4">
               <div class="dib v-mid">
-                <h2 class="fw6 lh-copy f1 ">Anthony Alaribe</h2>
+                <h2 class="fw6 lh-copy f1 ">{{.Username}}</h2>
+                <!--<p class="fw2 lh-copy f4 ">member since january, 2016</p>-->
                 <p class="fw2 lh-copy f4 ">member since january, 2016</p>
               </div>
             </div>
@@ -59,7 +60,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib v-mid bg-white">
-                <img class="dib v-mid" src="/img/envelope.svg" style="width:28px"/>
+                <img class="dib v-mid" src="/public/img/envelope.svg" style="width:28px"/>
                 <span class="dib v-mid">&nbsp;&nbsp;21 messages</span>
               </div>
             </a>
@@ -67,7 +68,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib  bg-white">
-                <img src="/img/chat.svg" style="width:28px" class="dib v-mid"/>
+                <img src="/public/img/chat.svg" style="width:28px" class="dib v-mid"/>
                 <span class="dib v-mid">&nbsp;&nbsp;You have bid on 30 barters so far</span>
               </div>
             </a>
@@ -75,7 +76,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib bg-white">
-                <img src="/img/pin-post.svg" style="width:28px" class="dib v-mid"/>
+                <img src="/public/img/pin-post.svg" style="width:28px" class="dib v-mid"/>
                 <span class="dib v-mid">&nbsp;&nbsp;Uploaded 30 Barters so far</span>
               </div>
             </a>
@@ -156,15 +157,15 @@
           <h2 class="pv5">How it works?</h2>
           <div class="w-80-ns dib">
             <div class="w-33-ns dib">
-              <img src="/img/selectfromphone.png" class="" style="height:12rem;"/>
+              <img src="/public/img/selectfromphone.png" class="" style="height:12rem;"/>
               <p class="fw6 f3 pa2">Register an item you want to batter</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Accept a bid from someone who has what you want</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Make the exchange and enjoy your life</p>
             </div>
           </div>
@@ -186,14 +187,14 @@
               <div id="share-buttons" class=" db pv3">
                  <!-- Facebook -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/facebook.png" alt="Facebook" class="w3">
+                 <img src="/public/img/facebook.png" alt="Facebook" class="w3">
                  </a>
                  <a href="cx" target="_blank" class="dib ">
-                 <img src="/img/email.png" alt="Email" class="w3">
+                 <img src="/public/img/email.png" alt="Email" class="w3">
                  </a>
                  <!-- Twitter -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/instagram.png" alt="Twitter" class="w3">
+                 <img src="/public/img/instagram.png" alt="Twitter" class="w3">
                  </a>
                  <!-- Email -->
 
@@ -218,7 +219,7 @@
         </section>
         <!--End Footer -->
 
-        <script src="/js/jquery-3.1.1.min.js"></script>
-        <script src="/js/lightbox.min.js"></script>
+        <script src="/public/js/jquery-3.1.1.min.js"></script>
+        <script src="/public/js/lightbox.min.js"></script>
     </body>
 </html>

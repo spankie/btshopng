@@ -6,14 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Item</title>
+        <title>Sign in/Sign up</title>
         <meta name="description" content="Item">
         <meta name="author" content="btshopng">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/tachyons.min.css"/>
-        <link rel="stylesheet" href="css/lightbox.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/public/css/normalize.css">
+        <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
+        <link rel="stylesheet" href="/public/css/lightbox.min.css">
+        <link rel="stylesheet" href="/public/css/style.css">
 
         <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -33,12 +33,12 @@
               <form class="dib v-mid">
                 <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
                 <button class="link bg-black white  dib v-mid pa2 bw0">
-                  <img src="/img/search.svg" style="width:18px" class="dib"/>
+                  <img src="/public/img/search.svg" style="width:18px" class="dib"/>
                 </button>
               </form>
               <a class="link black  dib ph3 dim" href="/">Home</a>
               <a class="link black  dib v-mid ph3 dim" href="#">
-                <img src="/img/user.svg" style="width:32px" class="dib ph2"/>
+                <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
                 <span class="dib">login/<br/>signup</span></a>
             </div>
           </div>
@@ -54,42 +54,44 @@
             </div>
             <div class="tc pa2 pv4">
               <a href="#" class="pa3 link bg-blue white" style="background-color:#3b5998;">
-                <img src="/img/facebook-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with facebook</a>
+                <img src="/public/img/facebook-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with facebook</a>
               <a href="#" class="pa3 link bg-red white " style="background-color:#d34836;">
-                <img src="/img/google-plus-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with Google Plus</a>
+                <img src="/public/img/google-plus-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with Google Plus</a>
             </div>
             <div class="bt bb b--near-white pv2 bw1 cf">
               <section class="w-50  dib fl pa4 ">
-                <form class="w-100">
+                <p class="fw2 red f6">{{.LoginMessage}}</p>
+                <form class="w-100" action="/login" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Email</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
+                    <input type="text" name="email" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
                   </div>
                   <div class="pv2 w-100">
                     <label class="dn w3">Password</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Password"/>
+                    <input type="text" name="password" class="pa3 w-100 bg-near-white" placeholder="Password"/>
                   </div>
                   <div class="tr">
-                    <button class="pv3 ph4 bg-navy white bw0 shadow-4">Login</button>
+                    <button type="submit" class="pv3 ph4 bg-navy white bw0 shadow-4">Login</button>
                   </div>
                 </form>
               </section>
               <section class="w-50  dib fl pa4 bl bw1 b--near-white">
-                <form>
+                <p class="fw2 red f6">{{.SignupMessage}}</p>
+                <form action="/signup" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Name</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Full Name"/>
+                    <input type="text" name="name" class="pa3 w-100 bg-near-white" placeholder="Full Name"/>
                   </div>
                   <div class="pv2 w-100">
-                    <label class=" dn w3">Email</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
+                    <label class="dn w3">Email</label>
+                    <input type="text" name="email" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
                   </div>
                   <div class="pv2 w-100">
                     <label class="dn w3">Password</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Password"/>
+                    <input type="text" name="passwd" class="pa3 w-100 bg-near-white" placeholder="Password"/>
                   </div>
                   <div class="tr">
-                    <button class="pv3 ph4 bg-navy white bw0 shadow-4 ">Signup</button>
+                    <button type="submit" class="pv3 ph4 bg-navy white bw0 shadow-4 ">Signup</button>
                   </div>
                 </form>
               </section>
@@ -103,15 +105,15 @@
           <h2 class="pv5">How it works?</h2>
           <div class="w-80-ns dib">
             <div class="w-33-ns dib">
-              <img src="/img/selectfromphone.png" class="" style="height:12rem;"/>
+              <img src="/public/img/selectfromphone.png" class="" style="height:12rem;"/>
               <p class="fw6 f3 pa2">Register an item you want to batter</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Accept a bid from someone who has what you want</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Make the exchange and enjoy your life</p>
             </div>
           </div>
@@ -133,14 +135,14 @@
               <div id="share-buttons" class=" db pv3">
                  <!-- Facebook -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/facebook.png" alt="Facebook" class="w3">
+                 <img src="/public/img/facebook.png" alt="Facebook" class="w3">
                  </a>
                  <a href="cx" target="_blank" class="dib ">
-                 <img src="/img/email.png" alt="Email" class="w3">
+                 <img src="/public/img/email.png" alt="Email" class="w3">
                  </a>
                  <!-- Twitter -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/instagram.png" alt="Twitter" class="w3">
+                 <img src="/public/img/instagram.png" alt="Twitter" class="w3">
                  </a>
                  <!-- Email -->
 
@@ -165,7 +167,7 @@
         </section>
         <!--End Footer -->
 
-        <script src="/js/jquery-3.1.1.min.js"></script>
-        <script src="/js/lightbox.min.js"></script>
+        <script src="/public/js/jquery-3.1.1.min.js"></script>
+        <script src="/public/js/lightbox.min.js"></script>
     </body>
 </html>
