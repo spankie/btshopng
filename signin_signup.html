@@ -51,7 +51,6 @@
           <section class="w-60-ns pa3 pv4  shadow-4 bg-white">
             <div>
               <h2 class="tc">Register or Sign in</h2>
-              <h3 class="tc">{{.}}</h3>
             </div>
             <div class="tc pa2 pv4">
               <a href="#" class="pa3 link bg-blue white" style="background-color:#3b5998;">
@@ -61,21 +60,23 @@
             </div>
             <div class="bt bb b--near-white pv2 bw1 cf">
               <section class="w-50  dib fl pa4 ">
-                <form class="w-100">
+                <p class="fw2 red f6">{{.LoginMessage}}</p>
+                <form class="w-100" action="/login" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Email</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
+                    <input type="text" name="email" class="pa3 w-100 bg-near-white" placeholder="Email address"/>
                   </div>
                   <div class="pv2 w-100">
                     <label class="dn w3">Password</label>
-                    <input type="text" class="pa3 w-100 bg-near-white" placeholder="Password"/>
+                    <input type="text" name="password" class="pa3 w-100 bg-near-white" placeholder="Password"/>
                   </div>
                   <div class="tr">
-                    <button class="pv3 ph4 bg-navy white bw0 shadow-4">Login</button>
+                    <button type="submit" class="pv3 ph4 bg-navy white bw0 shadow-4">Login</button>
                   </div>
                 </form>
               </section>
               <section class="w-50  dib fl pa4 bl bw1 b--near-white">
+                <p class="fw2 red f6">{{.SignupMessage}}</p>
                 <form action="/signup" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Name</label>
