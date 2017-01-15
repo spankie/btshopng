@@ -25,13 +25,6 @@ type Data struct {
 	LoginMessage  string
 }
 
-// type LoginData struct {
-// 	_id      bson.M
-// 	Name     bson.D
-// 	Email    bson.D
-// 	Password bson.D
-// }
-
 func main() {
 
 	// Serve the signup page.
@@ -140,7 +133,7 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 
 		// compare the result from the db to an empty struct
 		if count <= 0 {
-			fmt.Println("email:", newUser)
+
 			// if result is empty, then the email can be used.
 			fmt.Println("Email is available")
 
