@@ -5,12 +5,15 @@ import (
 	"html/template"
 	"net/http"
 
+	"time"
+
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // template of signup/signin page to be served
 var tmpl = template.Must(template.New("signin_signup.html").ParseFiles("../signin_signup.html"))
+var profile = template.Must(template.New("profile_notifications.html").ParseFiles("../profile_notifications.html"))
 
 // User interface to contain user information
 type User struct {
@@ -29,8 +32,10 @@ func main() {
 
 	// Serve the signup page.
 	http.HandleFunc("/signup", signupHandler)
-
+	// process login form
 	http.HandleFunc("/login", loginHandler)
+	// Serve profile page
+	http.HandleFunc("/profile", profileHandler)
 
 	// Serve static files.
 	f := http.FileServer(http.Dir("../"))
@@ -41,6 +46,8 @@ func main() {
 	fmt.Printf("Server started on %s\n", port)
 	http.ListenAndServe(":"+port, nil)
 }
+
+//////-- HANDLERS --//////
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
@@ -60,7 +67,10 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 		// get the form values
 		r.ParseForm()
+
+		// TODO: Validate form data before checking the db.(ifempty, matches the required format)
 		email := r.PostFormValue("email")
+		// TODO: password would be hashed to match the DB result
 		passwd := r.PostFormValue("password")
 
 		// select Collection
@@ -79,12 +89,15 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("result:", result.Map()["Email"])
 
 		if len(result) == 0 {
+
 			data.LoginMessage = "Username or Password is incorrect"
 			tmpl.Execute(w, data)
+
 		} else {
-			// TODO: redirect to the the users profile page
-			data.LoginMessage = "Logged In"
-			tmpl.Execute(w, data)
+
+			// TODO: redirect to the the users profile page with session
+			http.Redirect(w, r, "/profile", http.StatusFound)
+
 		}
 	}
 }
@@ -115,8 +128,9 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		// new struct containing the form values
 		newUser := User{
-			Name:     r.PostFormValue("name"),
-			Email:    r.PostFormValue("email"),
+			Name:  r.PostFormValue("name"),
+			Email: r.PostFormValue("email"),
+			// TODO: Password would be hashed before storage
 			Password: r.PostFormValue("passwd"),
 		}
 
@@ -160,4 +174,18 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, data)
 	}
 
+}
+
+func profileHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO: establish session at login or here.
+
+	data := struct {
+		Username string
+		Time     time.Time
+	}{
+		Username: "Dummy Name",
+		Time:     time.Now(),
+	}
+
+	profile.Execute(w, data)
 }
