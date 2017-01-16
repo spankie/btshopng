@@ -21,7 +21,7 @@ var (
 )
 
 // Init initialize the configurations
-func Init() *Conf {
+func Init() {
 
 	// get mongo server address from the system variables
 	MONGOSERVER := os.Getenv("MONGO_URL")
@@ -63,10 +63,10 @@ func Init() *Conf {
 	log.Println("Mongo server:", MONGOSERVER)
 
 	// return the Configuration
-	return &config
+	// return &config
 }
 
 // GetConf returns the App configurations
-// func GetConf() *Conf {
-// 	return &config
-// }
+func GetConf() *Conf {
+	return &config
+}
