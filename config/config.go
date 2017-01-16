@@ -45,6 +45,7 @@ func Init() *Conf {
 	// log error if available from connecting to DB
 	if err != nil {
 		log.Println("Error connecting to DB:", err)
+		panic(err)
 	}
 
 	// Set safeMode of the session

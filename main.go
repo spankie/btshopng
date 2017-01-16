@@ -1,17 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-
-	"github.com/spankie/btshopng/config"
-
+	"os"
 	"time"
 
-	"os"
-
+	"github.com/spankie/btshopng/config"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -68,9 +64,11 @@ func main() {
 //////-- HANDLERS --//////
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
+
+	// instantiate data
+	data := Data{}
+
 	if r.Method == "POST" {
-		// instantiate data
-		data := Data{}
 
 		// Get database from configurations
 		db := appConf.Database
@@ -92,24 +90,35 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		// Check if email and password matches any in the DB
 		err := c.Find(bson.M{"Email": email, "Password": passwd}).One(&result)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+			if len(result) == 0 {
+
+				// debug purposes
+				log.Println("result:", result)
+
+				w.Header().Set("Content-Type", "text/html")
+				data.LoginMessage = "Username or Password is incorrect"
+				tmpl.Execute(w, data)
+
+			} else {
+
+				// TODO: redirect to the the users profile page with session
+				http.Redirect(w, r, "/profile", http.StatusFound)
+
+			}
+
+			// http.Error(w, err.Error(), http.StatusInternalServerError)
+			// log.Println("no data matching the mail supplied", err)
+
 		}
 
-		// debug purposes
-		fmt.Println("result:", result.Map()["Email"])
+	} else if r.Method == "GET" {
 
-		if len(result) == 0 {
+		// if the request is not a post request, just Serve the page
+		tmpl.Execute(w, data)
 
-			data.LoginMessage = "Username or Password is incorrect"
-			tmpl.Execute(w, data)
-
-		} else {
-
-			// TODO: redirect to the the users profile page with session
-			http.Redirect(w, r, "/profile", http.StatusFound)
-
-		}
 	}
+
 }
 
 func signupHandler(w http.ResponseWriter, r *http.Request) {
@@ -148,7 +157,7 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		if count <= 0 {
 
 			// if result is empty, then the email can be used.
-			fmt.Println("Email is available")
+			log.Println("Email is available")
 
 			// insert the User data to db
 			err = c.Insert(newUser)
@@ -163,7 +172,7 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 
 			// if result is not empty, then the email has already been used before.
-			fmt.Println("email already exists")
+			log.Println("email already exists")
 			data.SignupMessage = "Email already exists"
 			tmpl.Execute(w, data)
 		}
