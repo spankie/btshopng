@@ -3,17 +3,21 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+
+	"github.com/spankie/btshopng/config"
 
 	"time"
 
-	"gopkg.in/mgo.v2"
+	"os"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
 // template of signup/signin page to be served
-var tmpl = template.Must(template.New("signin_signup.html").ParseFiles("../signin_signup.html"))
-var profile = template.Must(template.New("profile_notifications.html").ParseFiles("../profile_notifications.html"))
+var tmpl = template.Must(template.New("signin_signup.html").ParseFiles("templates/signin_signup.html"))
+var profile = template.Must(template.New("profile_notifications.html").ParseFiles("templates/profile_notifications.html"))
 
 // User interface to contain user information
 type User struct {
@@ -28,7 +32,16 @@ type Data struct {
 	LoginMessage  string
 }
 
+var (
+	appConf *config.Conf
+)
+
 func main() {
+
+	// Initialize configurations
+	appConf = config.Init()
+	// Close the session
+	// defer config.GetConf().Database.Session.Close()
 
 	// Serve the signup page.
 	http.HandleFunc("/signup", signupHandler)
@@ -38,13 +51,18 @@ func main() {
 	http.HandleFunc("/profile", profileHandler)
 
 	// Serve static files.
-	f := http.FileServer(http.Dir("../"))
+	f := http.FileServer(http.Dir("./templates/assets/"))
 	http.Handle("/public/", http.StripPrefix("/public/", f))
 
 	// Start up the server
-	port := "3000"
-	fmt.Printf("Server started on %s\n", port)
-	http.ListenAndServe(":"+port, nil)
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		log.Println("No port set, Using default port 3000")
+		PORT = "3000"
+	}
+
+	log.Printf("Server started on %s", PORT)
+	log.Fatal(http.ListenAndServe(":"+PORT, nil))
 }
 
 //////-- HANDLERS --//////
@@ -54,16 +72,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		// instantiate data
 		data := Data{}
 
-		// create mongo session
-		session, err := mgo.Dial("mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-
-		// close the session
-		defer session.Close()
-
-		session.SetSafe(&mgo.Safe{})
+		// Get database from configurations
+		db := appConf.Database
 
 		// get the form values
 		r.ParseForm()
@@ -74,13 +84,13 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		passwd := r.PostFormValue("password")
 
 		// select Collection
-		c := session.DB("btshopng").C("Users")
+		c := db.C("Users")
 
 		// result struct
 		result := bson.D{}
 
 		// Check if email and password matches any in the DB
-		err = c.Find(bson.M{"Email": email, "Password": passwd}).One(&result)
+		err := c.Find(bson.M{"Email": email, "Password": passwd}).One(&result)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -111,18 +121,7 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		// If it is a post request, process the request.
 
-		// connect to mongodb server
-		session, err := mgo.Dial("mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng")
-		if err != nil {
-			// reply with internal server error
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-
-		// close the connection lastly.
-		defer session.Close()
-
-		// set session to safe.
-		session.SetSafe(&mgo.Safe{})
+		db := appConf.Database
 
 		// get the post form values
 		r.ParseForm()
@@ -135,11 +134,11 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// create a db connection
-		c := session.DB("btshopng").C("Users")
+		c := db.C("Users")
 
 		// check if email has already been used by querying the db
 		var count int
-		count, err = c.Find(bson.M{"Email": string(newUser.Email)}).Count()
+		count, err := c.Find(bson.M{"Email": string(newUser.Email)}).Count()
 		// Select(bson.M{"email": 0}).
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
