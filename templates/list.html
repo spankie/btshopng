@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
     <head>
@@ -6,14 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Item</title>
+        <title>bartergo</title>
         <meta name="description" content="Item">
         <meta name="author" content="btshopng">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/tachyons.min.css"/>
-        <link rel="stylesheet" href="css/lightbox.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/public/css/normalize.css">
+        <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
+        <link rel="stylesheet" href="/public/css/lightbox.min.css">
+        <link rel="stylesheet" href="/public/css/style.css">
 
         <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -24,26 +24,24 @@
       <!-- main nav -->
         <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
           <div class="w-100 db ph5 cf">
-            <div class="fl v-mid dib">
-              <a class="link black  dib ph3 dim" href="#">
-                  Btshopng
-              </a>
-            </div>
+            <div class="fl v-mid dib"><a class="link black dib ph3 dim" href="#">Btshopng</a></div>
             <div class="fr v-mid dib">
-              <form class="dib v-mid">
-                <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
-                <button class="link bg-black white  dib v-mid pa2 bw0">
-                  <img src="/img/search.svg" style="width:18px" class="dib"/>
+              <form class="dib v-mid" method="GET" action="/search">
+                <input type="text" name="searchItem" class="pa2" placeholder="search eg. cars, phone, etc"/>
+                <button type="submit" class="link bg-black white  dib v-mid pa2 bw0">
+                  <img src="/public/img/search.svg" style="width:18px" class="dib"/>
                 </button>
               </form>
-              <a class="link black  dib ph3 dim" href="/">Home</a>
-              <a class="link black  dib v-mid ph3 dim" href="/signin_signup.html">
-                <img src="/img/user.svg" style="width:32px" class="dib ph2"/>
-                <span class="dib">login/<br/>signup</span></a>
+              <a class="link black dib ph3 dim" href="/">Home</a>
+              <a class="link black dib v-mid ph3 dim" href="/signup">
+                <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
+                <span class="dib">login/<br/>signup</span>
+              </a>
             </div>
           </div>
         </nav>
         <!-- End main nav -->
+
         <section class="bg-gray vh-50 cover " style="background-image:url('/img/hero4.jpg');">
           <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
             <div class="w-70-ns dib white">
@@ -61,11 +59,11 @@
             <div class="w-100 bg-white-ns pa3-ns pb3 shadow-4-ns">
               <h2 class="tc pv2 ph3 primary fw4 dn dib-ns">Categories</h2>
               <div>
-                <a href="#" class="link dib db-ns bg-white  pa3 ma1 ma0-ns">Electronics</a>
-                <a href="#" class="link dib db-ns bg-white  pa3 ma1 ma0-ns">Male Clothing</a>
-                <a href="#" class="link dib db-ns bg-white  pa3 ma1 ma0-ns">Female Clothing</a>
-                <a href="#" class="link dib db-ns bg-white  pa3 ma1 ma0-ns">House Hold Services</a>
-                <a href="#" class="link dib db-ns bg-white  pa3 ma1 ma0-ns">Repairs</a>
+                <a href="#" class="link dib db-ns bg-white pa3 ma1 ma0-ns">Electronics</a>
+                <a href="#" class="link dib db-ns bg-white pa3 ma1 ma0-ns">Male Clothing</a>
+                <a href="#" class="link dib db-ns bg-white pa3 ma1 ma0-ns">Female Clothing</a>
+                <a href="#" class="link dib db-ns bg-white pa3 ma1 ma0-ns">House Hold Services</a>
+                <a href="#" class="link dib db-ns bg-white pa3 ma1 ma0-ns">Repairs</a>
               </div>
             </div>
           </section>
@@ -106,7 +104,7 @@
                 <!-- end barter item -->
                 <!-- Barter item -->
                 <div class="shadow-4 bg-white pt3 mb4">
-                  <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
+                  <h3 class="fw4 pa3 pv3"><a href="#" class="link primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
                   <div class="pa3 pv2 ">
                     <h4 class="fw6 primary">What I want?</h4>
                     <p class="db pt1">A macbook or a really good laptop</p>
@@ -139,7 +137,7 @@
                 <!-- Barter item -->
                 <a href="#" class="link grow">
                   <div class="shadow-4 bg-white pt3 mb4 ">
-                    <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
+                    <h3 class="fw4 pa3 pv3"><a href="#" class="link primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
                     <div class="pa3 pv2 ">
                       <h4 class="fw6 primary">What I want?</h4>
                       <p class="db pt1">A macbook or a really good laptop</p>
@@ -170,13 +168,13 @@
                 <!-- end barter item -->
                 <!-- Barter item -->
                 <div class="shadow-4 bg-white pt3 mb4">
-                  <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
+                  <h3 class="fw4 pa3 pv3"><a href="#" class="link primary">Anthony Alaribe</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
                   <div class="pa3 pv2 ">
                     <h4 class="fw6 primary">What I want?</h4>
                     <p class="db pt1">A macbook or a really good laptop</p>
                     <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
                   </div>
-                  <div class="pa3 pt2 ">
+                  <div class="pa3 pt2">
                     <h4 class="fw6 primary">What I want?</h4>
                     <p class="db pt1">A macbook or a really good laptop</p>
                     <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
@@ -216,14 +214,14 @@
               <div id="share-buttons" class=" db pv3">
                  <!-- Facebook -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/facebook.png" alt="Facebook" class="w3">
+                 <img src="/public/img/facebook.png" alt="Facebook" class="w3">
                  </a>
                  <a href="cx" target="_blank" class="dib ">
-                 <img src="/img/email.png" alt="Email" class="w3">
+                 <img src="/public/img/email.png" alt="Email" class="w3">
                  </a>
                  <!-- Twitter -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/instagram.png" alt="Twitter" class="w3">
+                 <img src="/public/img/instagram.png" alt="Twitter" class="w3">
                  </a>
                  <!-- Email -->
 
@@ -238,7 +236,7 @@
             <a href="/privacy_policy" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Frequently Asked Questions</a>
           </div>
            <div class="tc pa4">
-              <span style=" font-size:0.7rem;" class="f6 fw1 tracked fl light-gray">© Battershop 2016</span>
+              <span style="font-size:0.7rem;" class="f6 fw1 tracked fl light-gray">© Battershop 2016</span>
               <span class="f6 fr" style="font-size:0.6rem;" >  made with
               <span class="red" font-size:0.7rem;>❤</span>  by
               <a href="http://past3.com.ng/" class="link light-gray fw1 tracked">Past 3 Software and Design Studio</a>
@@ -248,7 +246,7 @@
         </section>
         <!--End Footer -->
 
-        <script src="/js/jquery-3.1.1.min.js"></script>
-        <script src="/js/lightbox.min.js"></script>
+        <script src="/public/js/jquery-3.1.1.min.js"></script>
+        <script src="/public/js/lightbox.min.js"></script>
     </body>
 </html>

@@ -20,12 +20,16 @@ func main() {
 	// Close the session
 	defer config.GetConf().Database.Session.Close()
 
+	// Serve the index page
+	http.HandleFunc("/", handlers.IndexHandler)
 	// Serve the signup page.
 	http.HandleFunc("/signup", handlers.SignupHandler)
 	// process login form
 	http.HandleFunc("/login", handlers.LoginHandler)
 	// Serve profile page
 	http.HandleFunc("/profile", handlers.ProfileHandler)
+	// Serve the search page
+	http.HandleFunc("/search", handlers.SearchHandler)
 
 	// Serve static files.
 	f := http.FileServer(http.Dir("./templates/assets/"))

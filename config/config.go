@@ -12,8 +12,8 @@ type Conf struct {
 	MongoDB     string
 	MongoServer string
 	Database    *mgo.Database
-	DBPassword  string
-	DBUser      string
+	//DBPassword  string
+	//DBUser      string
 }
 
 var (
@@ -31,8 +31,8 @@ func Init() {
 
 	// set mongo server to default if it is not set as a system variable
 	if MONGOSERVER == "" {
-		log.Println("No mongo server address set, Using default address")
 		MONGOSERVER = "mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng"
+		log.Println("No mongo server address set, Using default address:", MONGOSERVER)
 	}
 
 	// set name of mongo DB to default if it is not set as a system variable
@@ -44,7 +44,7 @@ func Init() {
 	session, err := mgo.Dial(MONGOSERVER)
 	// log error if available from connecting to DB
 	if err != nil {
-		log.Println("Error connecting to DB:", err)
+		log.Println("Error connecting to DB:", err, "shutting down...")
 		panic(err)
 	}
 

@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+
 	"time"
 
 	"github.com/spankie/btshopng/config"
@@ -11,7 +12,6 @@ import (
 )
 
 // template of signup/signin page to be served
-var profile = template.Must(template.New("profile_notifications.html").ParseFiles("templates/profile_notifications.html"))
 var tmpl = template.Must(template.New("signin_signup.html").ParseFiles("templates/signin_signup.html"))
 
 // Data contains data to be passed to templates
@@ -25,8 +25,10 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
+	Time     time.Time
 }
 
+// LoginHandler handles Login process
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// instantiate data
@@ -56,25 +58,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		err := c.Find(bson.M{"Email": email, "Password": passwd}).One(&result)
 		if err != nil {
 
-			if len(result) == 0 {
+			// debug purposes
+			log.Println("result:", result)
 
-				// debug purposes
-				log.Println("result:", result)
-
-				w.Header().Set("Content-Type", "text/html")
-				data.LoginMessage = "Username or Password is incorrect"
-				tmpl.Execute(w, data)
-
-			} else {
-
-				// TODO: redirect to the the users profile page with session
-				http.Redirect(w, r, "/profile", http.StatusFound)
-
-			}
+			w.Header().Set("Content-Type", "text/html")
+			data.LoginMessage = "Username or Password is incorrect"
+			tmpl.Execute(w, data)
 
 			// http.Error(w, err.Error(), http.StatusInternalServerError)
 			// log.Println("no data matching the mail supplied", err)
 
+		} else {
+			// TODO: redirect to the the users profile page with session
+			http.Redirect(w, r, "/profile", http.StatusFound)
 		}
 
 	} else if r.Method == "GET" {
@@ -86,6 +82,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// SignupHandler handles signup process
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	// instantiate data
@@ -105,6 +102,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 			Email: r.PostFormValue("email"),
 			// TODO: Password would be hashed before storage
 			Password: r.PostFormValue("passwd"),
+			Time:     time.Now(),
 		}
 
 		// create a db connection
@@ -147,18 +145,4 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, data)
 	}
 
-}
-
-func ProfileHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO: establish session at login or here.
-
-	data := struct {
-		Username string
-		Time     time.Time
-	}{
-		Username: "Dummy Name",
-		Time:     time.Now(),
-	}
-
-	profile.Execute(w, data)
 }
