@@ -1,47 +1,101 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/spankie/btshopng/config"
-	"github.com/spankie/btshopng/handlers"
+	"github.com/julienschmidt/httprouter"
+	"github.com/justinas/alice"
+	"github.com/rs/cors"
+	"github.com/tonyalaribe/btshopng/config"
+	"github.com/tonyalaribe/btshopng/web"
 )
 
-var (
-	appConf *config.Conf
-)
+// Router struct would carry the httprouter instance, so its methods could be verwritten and replaced with methds with wraphandler
+type Router struct {
+	*httprouter.Router
+}
+
+// Get is an endpoint to only accept requests of method GET
+func (r *Router) Get(path string, handler http.Handler) {
+	r.GET(path, wrapHandler(handler))
+}
+
+// Post is an endpoint to only accept requests of method POST
+func (r *Router) Post(path string, handler http.Handler) {
+	r.POST(path, wrapHandler(handler))
+}
+
+// Put is an endpoint to only accept requests of method PUT
+func (r *Router) Put(path string, handler http.Handler) {
+	r.PUT(path, wrapHandler(handler))
+}
+
+// Delete is an endpoint to only accept requests of method DELETE
+func (r *Router) Delete(path string, handler http.Handler) {
+	r.DELETE(path, wrapHandler(handler))
+}
+
+// NewRouter is a wrapper that makes the httprouter struct a child of the router struct
+func NewRouter() *Router {
+	return &Router{httprouter.New()}
+}
+
+func wrapHandler(h http.Handler) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		ctx := context.WithValue(r.Context(), "params", ps)
+		r = r.WithContext(ctx)
+		h.ServeHTTP(w, r)
+	}
+}
+
+func init() {
+
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+}
 
 func main() {
-
-	// Initialize configurations
+	web.TemplateInit()
 	config.Init()
-	// Close the session
-	defer config.GetConf().Database.Session.Close()
 
-	// Serve the index page
-	http.HandleFunc("/", handlers.IndexHandler)
-	// Serve the signup page.
-	http.HandleFunc("/signup", handlers.SignupHandler)
-	// process login form
-	http.HandleFunc("/login", handlers.LoginHandler)
-	// Serve profile page
-	http.HandleFunc("/profile", handlers.ProfileHandler)
-	// Serve the search page
-	http.HandleFunc("/search", handlers.SearchHandler)
+	commonHandlers := alice.New(web.LoggingHandler)
+	//web.RecoverHandler, context.ClearHandler,
+	router := NewRouter()
+	log.Println(commonHandlers)
 
-	// Serve static files.
-	f := http.FileServer(http.Dir("./templates/assets/"))
-	http.Handle("/public/", http.StripPrefix("/public/", f))
+	router.Get("/", commonHandlers.ThenFunc(web.HomeHandler))
+	router.Get("/signup", commonHandlers.ThenFunc(web.SignupPageHandler))
 
-	// Start up the server
+	//router.ServeFiles("/static/*filepath", http.Dir("./build/static"))
+
+	fileServer := http.FileServer(http.Dir("./web/templates/assets"))
+	router.GET("/public/*filepath", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+		w.Header().Set("Vary", "Accept-Encoding")
+		w.Header().Set("Cache-Control", "public, max-age=7776000")
+		r.URL.Path = p.ByName("filepath")
+		fileServer.ServeHTTP(w, r)
+	})
+
+	// router.NotFound = commonHandlers.ThenFunc(func(w http.ResponseWriter, r *http.Request) {
+	// 	http.ServeFile(w, r, "./build/index.html")
+	// })
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
-		log.Println("No port set, Using default port 3000")
-		PORT = "3000"
+		log.Println("No Global port has been defined, using default")
+		PORT = "8080"
 	}
 
-	log.Printf("Server started on %s", PORT)
-	log.Fatal(http.ListenAndServe(":"+PORT, nil))
+	handler := cors.New(cors.Options{
+		//		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "DELETE"},
+		AllowCredentials: true,
+		AllowedHeaders:   []string{"Accept", "Content-Type", "X-Auth-Token", "*"},
+		Debug:            false,
+	}).Handler(router)
+	log.Println("serving ")
+	log.Fatal(http.ListenAndServe(":"+PORT, handler))
 }
