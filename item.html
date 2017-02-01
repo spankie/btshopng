@@ -19,8 +19,32 @@
         <![endif]-->
     </head>
 
-    <body class="">
-        <nav class="dark-primary-color flex justify-between bb b--white-10 ph0 ph5-m ph6-l">
+    <body class="avenir">
+        <!-- main nav -->
+        <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
+          <div class="w-100 db ph5 cf">
+            <div class="fl v-mid dib">
+              <a class="link black  dib ph3 dim" href="#">
+                  Btshopng
+              </a>
+            </div>
+            <div class="fr v-mid dib">
+              <form class="dib v-mid">
+                <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
+                <button class="link bg-black white  dib v-mid pa2 bw0">
+                  <img src="img/search.svg" style="width:18px" class="dib"/>
+                </button>
+              </form>
+              <a class="link black  dib ph3 dim" href="#">Home</a>
+              <a class="link black  dib v-mid ph3 dim" href="#">
+                <img src="img/user.svg" style="width:32px" class="dib ph2"/>
+                <span class="dib">login/<br/>signup</span></a>
+            </div>
+          </div>
+        </nav>
+        <!-- End main nav -->
+
+        <!--<nav class="dark-primary-color flex justify-between bb b--white-10 ph0 ph5-m ph6-l">
             <a class="link white-60 hover-white no-underline items-center pa3" href="#">
                 <h3>Btshopng</h3>
             </a>
@@ -30,15 +54,15 @@
                 <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20 mr3 mr4-ns" href="#0">Sign Up</a>
                 <a class="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 br-pill ba b--white-20 mr3 mr4-ns" href="#0">Login</a>
             </div>
-        </nav>
+        </nav>-->
 
-        <div class="cf body ph0 ph5-m ph6-l">
+        <div class="cf body ph0 ph5-m ph6-l pt5 pb2">
             <div class="fl w-30-ns w-100 pa2">
                 <div class="tc pa2">
                     <img src="img/logo.png" width="200" height="200" class="br-100 h-50 w-50 ba pa1 b--black-10">
                     <h4 class="mv2 primary-text-color">Username</h4>
                     <div class="default-primary-color text-primary-color pa1">
-                        <span class="mv2"><img src="img/loc.svg" alt="bid date" width="15" height="15" class="v-mid">&nbsp;location</span>
+                        <span class="mv2"><img src="img/loc.svg" alt="bid date" width="15" height="15" class="v-mid">&nbsp;Calabar</span>
                         <!--<p class="mv2">State</p>-->
                     </div>
                 </div>
@@ -47,25 +71,21 @@
                 <div class="pa2">
                     <h1 class="primary-text-color mv1">Item Name</h1>
                     <div class="detail secondary-text-color mv2">
-                        <p>Breif description of the product to be barttered.</p>
+                        <p>Brief description of the product to be barttered.</p>
                     </div><br>
                     <div class="tags dib">
-                        <span class="tag1 br-pill pa2 divider-color accent-color text-primary-color">
-                            Tag1
-                        </span>&nbsp;
-                        <span class="tag2 br-pill pa2 divider-color accent-color text-primary-color">
-                            Tag2
-                        </span>
+                        <span class="br-pill pa1 accent-color text-primary-color f6 fw2">Tag1</span>&nbsp;
+                        <span class="br-pill pa1 accent-color text-primary-color f6 fw2">Tag2</span>
                     </div><br><br>
 
                     <div class="images">
-                        <div class="ma1">
-                            <img src="img/logo.png" width="200" height="200" class="h4 w4 ba pa1 b--black-10">
-                            <img src="img/logo.png" width="200" height="200" class="h4 w4 ba pa1 b--black-10">
+                        <div class="mb3">
+                            <img src="img/selectfromphone.png" class="h5 w5 shadow-4 ba pa1 b--black-10 mr3">
+                            <img src="img/instagram.png" class="h5 w5 shadow-4 ba pa1 b--black-10">
                         </div>
-                        <div class="ma1">
-                            <img src="img/logo.png" width="200" height="200" class="h4 w4 ba pa1 b--black-10">
-                            <img src="img/logo.png" width="200" height="200" class="h4 w4 ba pa1 b--black-10">
+                        <div class="">
+                            <img src="img/messagefromuser.jpg" class="h5 w5 ba pa1 b--black-10 mr3">
+                            <img src="img/hero1.jpeg" class="h5 w5 ba pa1 b--black-10">
                         </div>
                     </div>
                 </div>
@@ -76,17 +96,17 @@
                         <p class="bid_user dib pa2 primary-text-color">
                             <img src="img/logo.png" width="30" height="30" class="v-mid ba br-100 b--black-10">
                             <div class="dib v-mid">
-                                <p>username</p>
-                                <p class="bid_date fw1 f6 secondary-text-color v-mid"><img src="img/clock1.svg" alt="bid date" width="13" height="13" class=""> 01/02/2016</p>
+                                <p>Username</p>
+                                <p class="bid_date fw1 f6 secondary-text-color v-mid">01/02/2016</p>
                             </div>
                         </p><hr class="light">
                         <div class="cf">
-                            <div class="bid_text pa2 w-100 w-80-ns fl">
+                            <div class="new_bid pa2 w-100 w-80-ns fl">
                                 <textarea class="w-100 pa2 ba b--black-20 primary-text-color bid_text">Hello, I have a nokia 3310 for exchange with your iPhone 6</textarea>
                                 <br><button class="light-primary-color ba ph3 pv2 text-primary-color"><img src="img/imgadd.svg" alt="bid date" width="20" height="20" class="v-mid"> Add image</button>
                             </div>
                             <div class="btn fr pa2">
-                                <button class="shadow-hover accent-color ba br2 ph3 pv2 text-primary-color">Bid</button>
+                                <button class="shadow-hover primary ba br2 ph3 pv2 text-primary-color">Bid</button>
                             </div>
                         </div>
                     </div>
@@ -95,8 +115,8 @@
                         <p class="bid_user dib pa2">
                             <img src="img/logo.png" width="30" height="30" class="v-mid ba br-100 b--black-10">
                             <div class="dib v-mid">
-                                <p>username</p>
-                                <p class="bid_date fw1 f6 secondary-text-color v-mid"><img src="img/clock1.svg" alt="bid date" width="13" height="13" class=""> 01/02/2016</p>
+                                <p>Username</p>
+                                <p class="bid_date fw1 f6 secondary-text-color v-mid">01/02/2016</p>
                             </div>
                         </p><hr class="light">
                         <p class="text pa2">
@@ -111,8 +131,8 @@
                         <p class="bid_user dib pa2">
                             <img src="img/logo.png" width="30" height="30" class="v-mid ba br-100 b--black-10">
                             <div class="dib v-mid">
-                                <p>username</p>
-                                <p class="bid_date fw1 f6 secondary-text-color v-mid"><img src="img/clock1.svg" alt="bid date" width="13" height="13" class=""> 01/02/2016</p>
+                                <p>Username</p>
+                                <p class="bid_date fw1 f6 secondary-text-color v-mid">01/02/2016</p>
                             </div>
                         </p><hr class="light">
                         <p class="text pa2">
@@ -127,13 +147,11 @@
                         <p class="bid_user dib pa2">
                             <img src="img/logo.png" width="30" height="30" class="v-mid ba br-100 b--black-10">
                             <div class="dib v-mid">
-                                <p>username</p>
-                                <p class="bid_date fw1 f6 secondary-text-color v-mid"><img src="img/clock1.svg" alt="bid date" width="13" height="13" class=""> 01/02/2016</p>
+                                <p>Username</p>
+                                <p class="bid_date fw1 f6 secondary-text-color v-mid">01/02/2016</p>
                             </div>
                         </p><hr class="light">
-                        <p class="text pa2">
-                            I want your iphone 6 for my iphone 5
-                        </p>
+                        <p class="text pa2">I want your iphone 6 for my iphone 5</p>
                         <div class="fr">
                             <button class="accent-color ba br2 ph3 pv2 text-primary-color"><img src="img/check.svg" alt="bid date" width="20" height="20" class="v-mid"> Approve</button>
                         </div>
@@ -142,12 +160,27 @@
                 </div><!-- bids -->
             </div>
         </div>
-        <!--<div class="cf">
-        </div>-->
-        <!--<div>
-            <h1>Hello</h1>
-        </div>-->
 
-        <!--/*<script src="js/scripts.js"></script>*/-->
+
+        <section class=" bg-black gray ">
+          <div class="tc pa4 pb2">
+            <a href="/" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Home</a>
+            <a href="/plusListings" style=" font-size:0.7rem;" class="f6 fw1 tracked  light-gray link ph3">Battershop</a>
+            <a href="/adverts" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">About us</a>
+            <a href="/privacy_policy" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Frequently Asked Questions</a>
+          </div>
+           <div class="tc pa4">
+              <span style=" font-size:0.7rem;" class="f6 fw1 tracked fl light-gray">© Battershop 2016</span>
+              <span class="f6 fr" style="font-size:0.6rem;" >  made with
+              <span class="red" font-size:0.7rem;>❤</span>  by
+              <a href="http://past3.com.ng/" class="link light-gray fw1 tracked">Past 3 Software and Design Studio</a>
+              </span>
+           </div>
+           <div style="clear:both"></div>
+        </section>
+        <!--End Footer -->
+
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/lightbox.min.js"></script>
     </body>
 </html>
