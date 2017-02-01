@@ -28,9 +28,19 @@
   color:#BF0311;
 }
 
+.square-70px {
+  height:70px;
+  width:70px;
+}
+
 @media screen and (min-width: 450px) {
     .bg-white-ns{
       background-color: #fff;
+    }
+
+    .square-200px-ns{
+      height:200px;
+      width:200px;
     }
 }
 
