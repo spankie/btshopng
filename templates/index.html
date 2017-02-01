@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
     <head>
@@ -10,10 +10,10 @@
         <meta name="description" content="Item">
         <meta name="author" content="btshopng">
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/tachyons.min.css"/>
-        <link rel="stylesheet" href="css/lightbox.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="/public/css/normalize.css">
+        <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
+        <link rel="stylesheet" href="/public/css/lightbox.min.css">
+        <link rel="stylesheet" href="/public/css/style.css">
 
         <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -24,27 +24,25 @@
       <!-- main nav -->
         <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
           <div class="w-100 db ph5 cf">
-            <div class="fl v-mid dib">
-              <a class="link black  dib ph3 dim" href="#">
-                  Btshopng
-              </a>
-            </div>
+            <div class="fl v-mid dib"><a class="link black dib ph3 dim" href="#">Btshopng</a></div>
             <div class="fr v-mid dib">
-              <form class="dib v-mid">
-                <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
-                <button class="link bg-black white  dib v-mid pa2 bw0">
-                  <img src="/img/search.svg" style="width:18px" class="dib"/>
+              <form class="dib v-mid" method="GET" action="/search">
+                <input type="text" name="searchItem" class="pa2" placeholder="search eg. cars, phone, etc"/>
+                <button type="submit" class="link bg-black white  dib v-mid pa2 bw0">
+                  <img src="/public/img/search.svg" style="width:18px" class="dib"/>
                 </button>
               </form>
-              <a class="link black  dib ph3 dim" href="#">Home</a>
-              <a class="link black  dib v-mid ph3 dim" href="#">
-                <img src="/img/user.svg" style="width:32px" class="dib ph2"/>
-                <span class="dib">login/<br/>signup</span></a>
+              <a class="link black dib ph3 dim" href="/">Home</a>
+              <a class="link black dib v-mid ph3 dim" href="/signup">
+                <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
+                <span class="dib">login/<br/>signup</span>
+              </a>
             </div>
           </div>
         </nav>
         <!-- End main nav -->
-        <section class="bg-gray vh-75 cover " style="background-image:url('/img/hero6.jpg');">
+
+        <section class="bg-gray vh-75 cover " style="background-image:url('/public/img/hero6.jpg');">
           <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
             <div class="w-70-ns dib white pa4">
               <h2 class="fw6 lh-copy f5 f4-ns">Nigeria's #1 Barter shop</h2>
@@ -53,21 +51,23 @@
           </div>
         </section>
         <section class="pa1 pa4-ns pv5 tc">
-          <h2 class="tc pv4 db f4 f2-ns fw4" >Search for barters</h2>
+          <h2 class="tc pv4 db f4 f2-ns fw4">Search for barters</h2>
           <div class="pa2 w-75-ns dib-ns cf">
-            <div class="dib w-50 ">
-              <label class="dn">Search Items</label>
-              <input type="text" class="pa2 pa3-ns dib w-100 br1 bw1" style="border:1px solid #888" placeholder="search items eg. cars"/>
-            </div>
-            <span class="pa1 pa3-ns ">in</span>
-            <div class="dib w-25">
-              <label class="dn">City</label>
-              <select class="pa2 pa3-ns dib input-reset w-100 bg-white br1" style="border:1px solid #888"  placeholder="city">
-                <option>Calabar</option>
-                <option>Lagos</option>
-              </select>
-            </div>
-            <a href="/list.html" class="link dib mv3 ma0-ns pa3 bg-black white mh3 bw0"> Search</a>
+            <form method="GET" action="/search">
+              <div class="dib w-50 ">
+                <label class="dn">Search Items</label>
+                <input type="text" name="searchItem" class="pa2 pa3-ns dib w-100 br1 bw1" style="border:1px solid #888" placeholder="search items eg. cars"/>
+              </div>
+              <span class="pa1 pa3-ns ">in</span>
+              <div class="dib w-25">
+                <label class="dn">City</label>
+                <select name="searchLocation" class="pa2 pa3-ns dib input-reset w-100 bg-white br1" style="border:1px solid #888"  placeholder="city">
+                  <option>Calabar</option>
+                  <option>Lagos</option>
+                </select>
+              </div>
+              <button type="submit" class="link dib mv3 ma0-ns pa3 bg-black white mh3 bw0">Search</button>
+            </form>
           </div>
         </section>
 
@@ -225,13 +225,13 @@
           <h2 class="pv5 fw4">How it works?</h2>
           <div class="w-80-ns dib">
             <div class="w-50 w-33-ns dib v-top pa3">
-              <img src="/img/selectfromphone.png" class="h4" />
+              <img src="/public/img/selectfromphone.png" class="h4" />
               <p class="fw4 f5 f4-ns  pa2">Register an item you want to batter</p>
             </div><div class="w-50 w-33-ns dib v-top pa3">
-              <img src="/img/messagefromuser.png" class="h4" />
+              <img src="/public/img/messagefromuser.png" class="h4" />
               <p class="fw4 f5 f4-ns pa2">Accept a bid from someone who has what you want</p>
             </div><div class="w-50 w-33-ns dib v-top pa3">
-              <img src="/img/thumbs.png" class="h4" />
+              <img src="/public/img/thumbs.png" class="h4" />
               <p class="fw4 f5 f4-ns pa2">Make the exchange and enjoy your life</p>
             </div>
           </div>
@@ -243,7 +243,7 @@
           <h3 class="fw1 f2 pv2">Trading has never been this easy</h3>
           <p class="fw4 f4">Join the community to barter and trade with other like minds</p>
           <br/>
-          <a href="#" class="dib link ba white pa3 bg-animate hover-bg-white hover-black">Register for free</a>
+          <a href="/signup" class="dib link ba white pa3 bg-animate hover-bg-white hover-black">Register for free</a>
         </section>
         <!-- End Action -->
         <!-- Footer -->
@@ -253,14 +253,14 @@
               <div id="share-buttons" class=" db pv3">
                  <!-- Facebook -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/facebook.png" alt="Facebook" class="w3">
+                 <img src="/public/img/facebook.png" alt="Facebook" class="w3">
                  </a>
                  <a href="cx" target="_blank" class="dib ">
-                 <img src="/img/email.png" alt="Email" class="w3">
+                 <img src="/public/img/email.png" alt="Email" class="w3">
                  </a>
                  <!-- Twitter -->
                  <a href="#" target="_blank" class="dib w4">
-                 <img src="/img/instagram.png" alt="Twitter" class="w3">
+                 <img src="/public/img/instagram.png" alt="Twitter" class="w3">
                  </a>
                  <!-- Email -->
 
@@ -285,7 +285,7 @@
         </section>
         <!--End Footer -->
 
-        <script src="/js/jquery-3.1.1.min.js"></script>
-        <script src="/js/lightbox.min.js"></script>
+        <script src="/public/js/jquery-3.1.1.min.js"></script>
+        <script src="/public/js/lightbox.min.js"></script>
     </body>
 </html>
