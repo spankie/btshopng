@@ -1,6 +1,7 @@
 package config
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -9,9 +10,14 @@ import (
 
 // Conf contains application wide configurations
 type Conf struct {
-	MongoDB     string
-	MongoServer string
-	Database    *mgo.Database
+	MongoDB                string
+	MongoServer            string
+	Database               *mgo.Database
+	PasswordEncryptionCost int
+	Encryption             struct {
+		Private []byte
+		Public  []byte
+	}
 	//DBPassword  string
 	//DBUser      string
 }
@@ -59,14 +65,28 @@ func Init() {
 	// Set configurations
 	config = Conf{
 
-		MongoDB:     MONGODB,
-		MongoServer: MONGOSERVER,
-		Database:    session.DB(MONGODB),
+		MongoDB:                MONGODB,
+		MongoServer:            MONGOSERVER,
+		Database:               session.DB(MONGODB),
+		PasswordEncryptionCost: 10,
 	}
 
 	// log the database in use
 	log.Println("Mongo server:", MONGOSERVER)
 
+	config.Encryption.Public, err = ioutil.ReadFile("./config/encryption_keys/public.pem")
+	if err != nil {
+		log.Println("Error reading public key")
+		log.Println(err)
+		return
+	}
+
+	config.Encryption.Private, err = ioutil.ReadFile("./config/encryption_keys/private.pem")
+	if err != nil {
+		log.Println("Error reading private key")
+		log.Println(err)
+		return
+	}
 	// return the Configuration
 	// return &config
 }

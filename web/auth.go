@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
 	"golang.org/x/oauth2"
 	//"golang.org/x/oauth2/google"
@@ -14,6 +15,13 @@ import (
 	"github.com/tonyalaribe/btshopng/models"
 	"golang.org/x/oauth2/facebook"
 )
+
+//LoginResponse sent to the cllient, carrying the token, upon login
+type LoginResponse struct {
+	User    models.User
+	Message string
+	Token   string
+}
 
 var FBOauthConf = &oauth2.Config{
 	ClientID:     "667159983456214",
@@ -89,7 +97,26 @@ func FBOauthRedirectHandler(w http.ResponseWriter, r *http.Request) {
 
 	user.Image.URL = user.FBPicture.Data.URL
 
-	user.Upsert(config.GetConf())
+	err = user.Upsert(config.GetConf())
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/signup", 301)
+		return
+	}
+
+	loginResp, err := GenerateJWT(user)
+	err = user.Upsert(config.GetConf())
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/signup", 301)
+		return
+	}
+
+	expire := time.Now().AddDate(0, 0, 1)
+	cookie := http.Cookie{Name: "AuthToken", Value: loginResp.Token, Path: "/", Expires: expire, MaxAge: 86400}
+
+	http.SetCookie(w, &cookie)
+
 	http.Redirect(w, r, "/profile", 301)
 }
 
