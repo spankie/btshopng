@@ -20,6 +20,10 @@ var (
 	config Conf
 )
 
+const (
+	USERCOLLECTION = "users"
+)
+
 // Init initialize the configurations
 func Init() {
 
@@ -31,7 +35,8 @@ func Init() {
 
 	// set mongo server to default if it is not set as a system variable
 	if MONGOSERVER == "" {
-		MONGOSERVER = "mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng"
+		//MONGOSERVER = "mongodb://spankie:506dad@ds163738.mlab.com:63738/btshopng"
+		MONGOSERVER = "127.0.0.1:27017"
 		log.Println("No mongo server address set, Using default address:", MONGOSERVER)
 	}
 

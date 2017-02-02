@@ -67,6 +67,9 @@ func main() {
 
 	router.Get("/", commonHandlers.ThenFunc(web.HomeHandler))
 	router.Get("/signup", commonHandlers.ThenFunc(web.SignupPageHandler))
+	router.Get("/profile", commonHandlers.ThenFunc(web.ProfileHandler))
+	router.Get("/fb_oauth_redirect", commonHandlers.ThenFunc(web.FBOauthRedirectHandler))
+	// router.Get("/google_oauth_redirect", commonHandlers.ThenFunc(web.OauthRedirectHandler))
 
 	//router.ServeFiles("/static/*filepath", http.Dir("./build/static"))
 
