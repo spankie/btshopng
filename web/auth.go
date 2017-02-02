@@ -96,7 +96,7 @@ func FBOauthRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user.Image.URL = user.FBPicture.Data.URL
-
+	user.DateCreated = time.Now()
 	err = user.Upsert(config.GetConf())
 	if err != nil {
 		log.Println(err)
@@ -105,7 +105,6 @@ func FBOauthRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	loginResp, err := GenerateJWT(user)
-	err = user.Upsert(config.GetConf())
 	if err != nil {
 		log.Println(err)
 		http.Redirect(w, r, "/signup", 301)

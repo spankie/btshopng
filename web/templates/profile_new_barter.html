@@ -47,10 +47,10 @@
         <section class="bg-gray vh-50 cover " style="background-image:url('/img/hero4.jpg');">
           <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
             <div class="w-70-ns dib white  cf h4">
-              <img src="//placehold.it/200x200" style="width:200px; height:200px;" class="br-100  dib v-mid bg-gray ba white mr4">
+              <img src="{{.User.Image.URL}}" style="width:200px; height:200px;" class="br-100  dib v-mid bg-gray ba white mr4">
               <div class="dib v-mid">
-                <h2 class="fw6 lh-copy f1 ">Anthony Alaribe</h2>
-                <p class="fw2 lh-copy f4 ">member since january, 2016</p>
+                <h2 class="fw6 lh-copy f1 ">{{.User.Name}}</h2>
+                <p class="fw2 lh-copy f4 ">{{.User.DateCreated}}</p>
               </div>
             </div>
         </div>
