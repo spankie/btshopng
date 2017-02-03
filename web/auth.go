@@ -10,10 +10,10 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/facebook"
 	//"golang.org/x/oauth2/google"
 	"github.com/btshopng/btshopng/config"
 	"github.com/btshopng/btshopng/models"
-	"golang.org/x/oauth2/facebook"
 )
 
 //LoginResponse sent to the cllient, carrying the token, upon login
@@ -23,13 +23,22 @@ type LoginResponse struct {
 	Token   string
 }
 
+// spankie's oauthConfig
 var FBOauthConf = &oauth2.Config{
-	ClientID:     "667159983456214",
-	ClientSecret: "0a594ec54461df7ecf51406c4d6d44c1",
+	ClientID:     "763167067164923",
+	ClientSecret: "9fadba8f65774f03d492ca95128e1a09",
 	Scopes:       []string{"public_profile", "email"},
 	RedirectURL:  "http://localhost:8080/fb_oauth_redirect",
 	Endpoint:     facebook.Endpoint,
 }
+
+// var FBOauthConf = &oauth2.Config{
+// 	ClientID:     "667159983456214",
+// 	ClientSecret: "0a594ec54461df7ecf51406c4d6d44c1",
+// 	Scopes:       []string{"public_profile", "email"},
+// 	RedirectURL:  "http://localhost:8080/fb_oauth_redirect",
+// 	Endpoint:     facebook.Endpoint,
+// }
 
 // var GoogleOauthConf = &oauth2.Config{
 // 	ClientID:     "825438983845-pkg6uce5p4pt7vg74qt7tf8e9850qi2d.apps.googleusercontent.com",
@@ -44,7 +53,10 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		FBAuthURL     string
 		GoogleAuthURL string
+		LoginMessage  string
 	}{}
+
+	data.LoginMessage = "Login"
 
 	// Redirect user to consent page to ask for permission
 	// for the scopes specified above.
