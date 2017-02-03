@@ -81,8 +81,12 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		FBAuthURL     string
 		GoogleAuthURL string
+		LoginMessage  string
 		SignupError   string
 	}{}
+
+	data.LoginMessage = ""
+	data.SignupError = ""
 
 	// This is set here so that when there are any errors from the signup process,
 	// the link will be passed to the template alongside the errors.
