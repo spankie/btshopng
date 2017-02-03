@@ -1,0 +1,42 @@
+{{define "head"}}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bartergo</title>
+    <meta name="description" content="Item">
+    <meta name="author" content="btshopng">
+
+    <link rel="stylesheet" href="/public/css/normalize.css">
+    <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="/public/css/lightbox.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+{{end}}
+
+
+{{define "nav_menu"}}
+<nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
+  <div class="w-100 db ph5 cf">
+    <div class="fl v-mid dib"><a class="link black dib ph3 dim" href="#">Btshopng</a></div>
+    <div class="fr v-mid dib">
+      <form class="dib v-mid" method="GET" action="/search">
+        <input type="text" name="searchItem" class="pa2" placeholder="search eg. cars, phone, etc"/>
+        <button type="submit" class="link bg-black white  dib v-mid pa2 bw0">
+          <img src="/public/img/search.svg" style="width:18px" class="dib"/>
+        </button>
+      </form>
+      <a class="link black dib ph3 dim" href="/">Home</a>
+      <a class="link black dib v-mid ph3 dim" href="/signup">
+        <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
+        <span class="dib">login/<br/>signup</span>
+      </a>
+    </div>
+  </div>
+</nav>
+{{end}}

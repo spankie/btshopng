@@ -21,8 +21,9 @@ type User struct {
 			URL string `json:"url"`
 		} `json:"data"`
 	} `json:"picture"`
-	Link        string `json:"link"`
-	DateCreated time.Time
+	Link                 string `json:"link"`
+	DateCreated          time.Time
+	FormattedDateCreated string
 }
 
 func (user User) Upsert(c *config.Conf) error {

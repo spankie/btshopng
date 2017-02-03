@@ -13,7 +13,9 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println(user)
+	//log.Println(user)
+
+	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
 
 	data := struct {
 		User models.User
