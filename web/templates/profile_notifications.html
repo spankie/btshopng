@@ -1,62 +1,19 @@
 <!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Item</title>
-        <meta name="description" content="Item">
-        <meta name="author" content="btshopng">
-
-        <link rel="stylesheet" href="/public/css/normalize.css">
-        <link rel="stylesheet" href="/public/css/tachyons.min.css"/>
-        <link rel="stylesheet" href="/public/css/lightbox.min.css">
-        <link rel="stylesheet" href="/public/css/style.css">
-
-        <!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-        <![endif]-->
-    </head>
+    {{template "head"}}
 
     <body class=" avenir " style="background-color:#f9f9f9">
-      <!-- main nav -->
-        <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center z-3">
-          <div class="w-100 db ph5 cf">
-            <div class="fl v-mid dib">
-              <a class="link black  dib ph3 dim" href="#">
-                  Btshopng
-              </a>
-            </div>
-            <div class="fr v-mid dib">
-              <form class="dib v-mid">
-                <input type="text" class="pa2" placeholder="search eg. cars, phone, etc"/>
-                <button class="link bg-black white  dib v-mid pa2 bw0">
-                  <img src="/public/img/search.svg" style="width:18px" class="dib"/>
-                </button>
-              </form>
-              <a class="link black  dib ph3 dim" href="/">Home</a>
-              <a class="link black  dib v-mid ph3 dim" href="/signup">
-                <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
-                <span class="dib">login/<br/>signup</span></a>
-            </div>
-          </div>
-        </nav>
+        <!-- main nav -->
+        {{template "nav_menu"}}
         <!-- End main nav -->
         <section class="bg-gray vh-50 cover " style="background-image:url('/public/img/hero4.jpg');">
           <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
             <div class="w-70-ns dib white  cf h2 h4-ns v-mid">
               <img src="//placehold.it/200x200"  class="br-100 h3 w3 dib v-mid bg-gray ba white mr4 square-70px square-200px-ns  ">
               <div class="dib v-mid">
-<<<<<<< HEAD
                 <h2 class="fw6 lh-copy f3 f1-ns  ">Anthony Alaribe</h2>
                 <p class="fw2 lh-copy f5 f4-ns ">member since january, 2016</p>
-=======
-                <h2 class="fw6 lh-copy f1 ">{{.Username}}</h2>
-                <!--<p class="fw2 lh-copy f4 ">member since january, 2016</p>-->
-                <p class="fw2 lh-copy f4 ">member since january, 2016</p>
->>>>>>> a90848808556ada1e4e2af66d9b8f3d6bc6d4b18
               </div>
             </div>
         </div>

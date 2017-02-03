@@ -73,7 +73,7 @@ func FBOauthRedirectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	client := FBOauthConf.Client(ctx, tok)
-	resp, err := client.Get("https://graph.facebook.com/me?fields=id,name,email,picture,link")
+	resp, err := client.Get("https://graph.facebook.com/me?fields=id,name,email,picture.type(large),link")
 	if err != nil {
 		log.Println(err)
 		http.Redirect(w, r, "/signup", 301)
