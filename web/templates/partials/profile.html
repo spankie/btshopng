@@ -1,0 +1,42 @@
+{{define "profile_banner" }}
+<section class="bg-gray vh-50 cover " style="background-image:url('/public/img/hero4.jpg');">
+  <div style="background-color:rgba(0,0,0,.3)" class="w-100 h-100 flex items-center justify-center">
+    <div class="w-70-ns dib white  cf h4">
+      <img src="{{.Image.URL}}" style="width:200px; height:200px;" class="br-100  dib v-mid bg-gray ba white mr4">
+      <div class="dib v-mid">
+        <h2 class="fw6 lh-copy f1 ">{{.Name}}</h2>
+        <p class="fw2 lh-copy f4 "><small>member since: </small>{{.FormattedDateCreated}}</p>
+      </div>
+    </div>
+</div>
+</section>
+{{end}}
+
+{{define "profile_quick_stats" }}
+<section class="tc">
+  <div class="pa2 dib">
+    <a href="#" class="link black grow dib">
+      <div class="shadow-4 pa3 dib v-mid bg-white">
+        <img class="dib v-mid" src="/public/img/envelope.svg" style="width:28px"/>
+        <span class="dib v-mid">&nbsp;&nbsp;21 messages</span>
+      </div>
+    </a>
+  </div>
+  <div class="pa2 dib">
+    <a href="#" class="link black grow dib">
+      <div class="shadow-4 pa3 dib  bg-white">
+        <img src="/public/img/chat.svg" style="width:28px" class="dib v-mid"/>
+        <span class="dib v-mid">&nbsp;&nbsp;You have bid on 30 barters so far</span>
+      </div>
+    </a>
+  </div>
+  <div class="pa2 dib">
+    <a href="#" class="link black grow dib">
+      <div class="shadow-4 pa3 dib bg-white">
+        <img src="/public/img/pin-post.svg" style="width:28px" class="dib v-mid"/>
+        <span class="dib v-mid">&nbsp;&nbsp;Uploaded 30 Barters so far</span>
+      </div>
+    </a>
+  </div>
+</section>
+{{end}}
