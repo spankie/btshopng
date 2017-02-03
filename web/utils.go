@@ -6,8 +6,8 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
-	"github.com/tonyalaribe/btshopng/config"
-	"github.com/tonyalaribe/btshopng/models"
+	"github.com/btshopng/btshopng/config"
+	"github.com/btshopng/btshopng/models"
 )
 
 //Userget reads the json web token(JWT) content from context and marshals it ito a user struct,

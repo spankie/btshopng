@@ -7,12 +7,12 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/tonyalaribe/btshopng/config"
+	"github.com/btshopng/btshopng/config"
 
 	"context"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/tonyalaribe/btshopng/messages"
+	"github.com/btshopng/btshopng/messages"
 )
 
 // Middlewares

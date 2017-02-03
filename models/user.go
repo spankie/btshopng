@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/tonyalaribe/btshopng/config"
+	"github.com/btshopng/btshopng/config"
 	"gopkg.in/mgo.v2/bson"
 )
 

@@ -9,8 +9,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
 	"github.com/rs/cors"
-	"github.com/tonyalaribe/btshopng/config"
-	"github.com/tonyalaribe/btshopng/web"
+	"github.com/btshopng/btshopng/config"
+	"github.com/btshopng/btshopng/web"
 )
 
 // Router struct would carry the httprouter instance, so its methods could be verwritten and replaced with methds with wraphandler

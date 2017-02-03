@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tonyalaribe/btshopng/config"
-	"github.com/tonyalaribe/btshopng/models"
+	"github.com/btshopng/btshopng/config"
+	"github.com/btshopng/btshopng/models"
 )
 
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {

@@ -11,8 +11,8 @@ import (
 
 	"golang.org/x/oauth2"
 	//"golang.org/x/oauth2/google"
-	"github.com/tonyalaribe/btshopng/config"
-	"github.com/tonyalaribe/btshopng/models"
+	"github.com/btshopng/btshopng/config"
+	"github.com/btshopng/btshopng/models"
 	"golang.org/x/oauth2/facebook"
 )
 
