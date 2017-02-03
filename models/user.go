@@ -24,7 +24,7 @@ type User struct {
 	Link                 string `json:"link"`
 	DateCreated          time.Time
 	FormattedDateCreated string
-	Password             string
+	Password             []byte
 }
 
 func (user User) Upsert(c *config.Conf) error {

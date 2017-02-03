@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
 	//"golang.org/x/oauth2/google"
@@ -85,7 +86,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		SignupError   string
 	}{}
 
-	data.LoginMessage = ""
+	data.LoginMessage = "Login"
 	data.SignupError = ""
 
 	// This is set here so that when there are any errors from the signup process,
@@ -99,55 +100,56 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	passwd := r.FormValue("passwd")
 
 	// Check if the Post data not empty and validate them.
-	if fullName != "" && email != "" && passwd != "" {
-		// encrypt password.
-		password, _ := encrypt(passwd)
-		now := time.Now()
+	if fullName == "" && email == "" && passwd == "" {
 
-		// create the user data
-		user := models.User{
-			Name:                 fullName,
-			Email:                email,
-			DateCreated:          now,
-			FormattedDateCreated: now.String(),
-			Password:             password,
-		}
-
-		// Upsert the user data to the db
-		err := user.Upsert(config.GetConf())
-		if err != nil {
-			log.Println(err)
-			data.SignupError = "Could not Sign you up right now. Try Again"
-			tmp := GetTemplates().Lookup("signin_signup.html")
-			tmp.Execute(w, data)
-			return
-		}
-
-		// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
-
-		// If all goes well, generate a token for the cookie
-		loginResp, err := GenerateJWT(user)
-		if err != nil {
-			log.Println(err)
-			http.Redirect(w, r, "/signup", 301)
-			return
-		}
-		// Create cookie
-		expire := time.Now().AddDate(0, 0, 1)
-		// I don't really know if the Name of the token should change
-		// from the one you used at FBOauthRedirectHandler()
-		cookie := http.Cookie{Name: "AuthToken", Value: loginResp.Token, Path: "/", Expires: expire, MaxAge: 86400}
-		// Set cookie
-		http.SetCookie(w, &cookie)
-		// send the user to thier profile page
-		http.Redirect(w, r, "/profile", 301)
+		data.SignupError = "Please Fill out all required Fields"
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
 		return
 
 	}
 
-	data.SignupError = "Please Fill out all required Fields"
-	tmp := GetTemplates().Lookup("signin_signup.html")
-	tmp.Execute(w, data)
+	// encrypt password.
+	password, _ := bcrypt.GenerateFromPassword([]byte(passwd), bcrypt.DefaultCost)
+	now := time.Now()
+
+	// create the user data
+	user := models.User{
+		Name:                 fullName,
+		Email:                email,
+		DateCreated:          now,
+		FormattedDateCreated: now.String(),
+		Password:             password,
+	}
+
+	// Upsert the user data to the db
+	err := user.Upsert(config.GetConf())
+	if err != nil {
+		log.Println(err)
+		data.SignupError = "Could not Sign you up right now. Try Again"
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
+		return
+	}
+
+	// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
+
+	// If all goes well, generate a token for the cookie
+	loginResp, err := GenerateJWT(user)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/signup", 301)
+		return
+	}
+	// Create cookie
+	expire := time.Now().AddDate(0, 0, 1)
+	// I don't really know if the Name of the token should change
+	// from the one you used at FBOauthRedirectHandler()
+	cookie := http.Cookie{Name: "AuthToken", Value: loginResp.Token, Path: "/", Expires: expire, MaxAge: 86400}
+	// Set cookie
+	http.SetCookie(w, &cookie)
+	// send the user to thier profile page
+	http.Redirect(w, r, "/profile", 301)
 	// return
 
 }
