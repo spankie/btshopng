@@ -4,10 +4,13 @@ import (
 	"net/http"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/mitchellh/mapstructure"
+	"errors"
+
 	"github.com/btshopng/btshopng/config"
 	"github.com/btshopng/btshopng/models"
+	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/mitchellh/mapstructure"
+	"golang.org/x/crypto/bcrypt"
 )
 
 //Userget reads the json web token(JWT) content from context and marshals it ito a user struct,
@@ -32,6 +35,21 @@ func Userget(r *http.Request) (models.User, error) {
 		return user, nil
 	}
 	return user, nil
+}
+
+func encrypt(word string) (string, error) {
+
+	hashedWord, err := bcrypt.GenerateFromPassword([]byte(word), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+
+	isMatch := bcrypt.CompareHashAndPassword(hashedWord, []byte(word))
+	if isMatch != nil {
+		return "", errors.New("Password does not match")
+	}
+
+	return string(hashedWord), nil
 }
 
 //Turn user details into a hasked token that can be used to recognize the user in the future.

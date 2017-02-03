@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/btshopng/btshopng/config"
+	"github.com/btshopng/btshopng/web"
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
 	"github.com/rs/cors"
-	"github.com/btshopng/btshopng/config"
-	"github.com/btshopng/btshopng/web"
 )
 
 // Router struct would carry the httprouter instance, so its methods could be verwritten and replaced with methds with wraphandler
@@ -70,6 +70,10 @@ func main() {
 	router.Get("/profile", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ProfileHandler))
 	router.Get("/fb_oauth_redirect", commonHandlers.ThenFunc(web.FBOauthRedirectHandler))
 	// router.Get("/google_oauth_redirect", commonHandlers.ThenFunc(web.OauthRedirectHandler))
+
+	// Post handlers
+	router.Post("/login", commonHandlers.ThenFunc(web.LoginHandler))
+	router.Post("/signup", commonHandlers.ThenFunc(web.SignupHandler))
 
 	//router.ServeFiles("/static/*filepath", http.Dir("./build/static"))
 

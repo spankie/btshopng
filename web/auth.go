@@ -24,21 +24,20 @@ type LoginResponse struct {
 }
 
 // spankie's oauthConfig
+// var FBOauthConf = &oauth2.Config{
+// 	ClientID:     "763167067164923",
+// 	ClientSecret: "9fadba8f65774f03d492ca95128e1a09",
+// 	Scopes:       []string{"public_profile", "email"},
+// 	RedirectURL:  "http://localhost:8080/fb_oauth_redirect",
+// 	Endpoint:     facebook.Endpoint,
+
 var FBOauthConf = &oauth2.Config{
-	ClientID:     "763167067164923",
-	ClientSecret: "9fadba8f65774f03d492ca95128e1a09",
+	ClientID:     "667159983456214",
+	ClientSecret: "0a594ec54461df7ecf51406c4d6d44c1",
 	Scopes:       []string{"public_profile", "email"},
 	RedirectURL:  "http://localhost:8080/fb_oauth_redirect",
 	Endpoint:     facebook.Endpoint,
 }
-
-// var FBOauthConf = &oauth2.Config{
-// 	ClientID:     "667159983456214",
-// 	ClientSecret: "0a594ec54461df7ecf51406c4d6d44c1",
-// 	Scopes:       []string{"public_profile", "email"},
-// 	RedirectURL:  "http://localhost:8080/fb_oauth_redirect",
-// 	Endpoint:     facebook.Endpoint,
-// }
 
 // var GoogleOauthConf = &oauth2.Config{
 // 	ClientID:     "825438983845-pkg6uce5p4pt7vg74qt7tf8e9850qi2d.apps.googleusercontent.com",
@@ -54,9 +53,11 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 		FBAuthURL     string
 		GoogleAuthURL string
 		LoginMessage  string
+		SignupError   string
 	}{}
 
 	data.LoginMessage = "Login"
+	data.SignupError = ""
 
 	// Redirect user to consent page to ask for permission
 	// for the scopes specified above.
@@ -68,6 +69,83 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 
 	tmp := GetTemplates().Lookup("signin_signup.html")
 	tmp.Execute(w, data)
+}
+
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	// check if POST data are set and validate them
+}
+
+// SignupHandler handles the signup process for in app signup
+func SignupHandler(w http.ResponseWriter, r *http.Request) {
+	// I feel SignupPageHandler() and this function should share the same struct for better memory conservation
+	data := struct {
+		FBAuthURL     string
+		GoogleAuthURL string
+		SignupError   string
+	}{}
+
+	// This is set here so that when there are any errors from the signup process,
+	// the link will be passed to the template alongside the errors.
+	data.FBAuthURL = FBOauthConf.AuthCodeURL("state", oauth2.AccessTypeOffline)
+
+	r.ParseForm()
+
+	fullName := r.FormValue("name")
+	email := r.FormValue("email")
+	passwd := r.FormValue("passwd")
+
+	// Check if the Post data not empty and validate them.
+	if fullName != "" && email != "" && passwd != "" {
+		// encrypt password.
+		password, _ := encrypt(passwd)
+		now := time.Now()
+
+		// create the user data
+		user := models.User{
+			Name:                 fullName,
+			Email:                email,
+			DateCreated:          now,
+			FormattedDateCreated: now.String(),
+			Password:             password,
+		}
+
+		// Upsert the user data to the db
+		err := user.Upsert(config.GetConf())
+		if err != nil {
+			log.Println(err)
+			data.SignupError = "Could not Sign you up right now. Try Again"
+			tmp := GetTemplates().Lookup("signin_signup.html")
+			tmp.Execute(w, data)
+			return
+		}
+
+		// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
+
+		// If all goes well, generate a token for the cookie
+		loginResp, err := GenerateJWT(user)
+		if err != nil {
+			log.Println(err)
+			http.Redirect(w, r, "/signup", 301)
+			return
+		}
+		// Create cookie
+		expire := time.Now().AddDate(0, 0, 1)
+		// I don't really know if the Name of the token should change
+		// from the one you used at FBOauthRedirectHandler()
+		cookie := http.Cookie{Name: "AuthToken", Value: loginResp.Token, Path: "/", Expires: expire, MaxAge: 86400}
+		// Set cookie
+		http.SetCookie(w, &cookie)
+		// send the user to thier profile page
+		http.Redirect(w, r, "/profile", 301)
+		return
+
+	}
+
+	data.SignupError = "Please Fill out all required Fields"
+	tmp := GetTemplates().Lookup("signin_signup.html")
+	tmp.Execute(w, data)
+	// return
+
 }
 
 func FBOauthRedirectHandler(w http.ResponseWriter, r *http.Request) {
