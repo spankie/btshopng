@@ -1,25 +1,13 @@
 <!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Item</title>
-        <meta name="description" content="Item">
-        <meta name="author" content="btshopng">
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/tachyons.min.css"/>
-        <link rel="stylesheet" href="css/style.css">
-
-        <!--[if lt IE 9]>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-        <![endif]-->
-    </head>
+    {{ template "head"}}
 
     <body class="avenir">
+        <!-- main nav -->
+        {{template "nav_menu"}}
+        <!-- End main nav -->
+
         <!-- main nav -->
         <nav class="bg-white shadow-4 cf fixed w-100 h3 flex flex-row items-center">
           <div class="w-100 db ph5 cf">
@@ -161,26 +149,9 @@
             </div>
         </div>
 
-
-        <section class=" bg-black gray ">
-          <div class="tc pa4 pb2">
-            <a href="/" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Home</a>
-            <a href="/plusListings" style=" font-size:0.7rem;" class="f6 fw1 tracked  light-gray link ph3">Battershop</a>
-            <a href="/adverts" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">About us</a>
-            <a href="/privacy_policy" style=" font-size:0.7rem;" class="f6 fw1 tracked light-gray link ph3">Frequently Asked Questions</a>
-          </div>
-           <div class="tc pa4">
-              <span style=" font-size:0.7rem;" class="f6 fw1 tracked fl light-gray">© Battershop 2016</span>
-              <span class="f6 fr" style="font-size:0.6rem;" >  made with
-              <span class="red" font-size:0.7rem;>❤</span>  by
-              <a href="http://past3.com.ng/" class="link light-gray fw1 tracked">Past 3 Software and Design Studio</a>
-              </span>
-           </div>
-           <div style="clear:both"></div>
-        </section>
+        {{template "footer_share_area"}}
+        <!-- Footer -->
+        {{template "footer"}}
         <!--End Footer -->
-
-        <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/lightbox.min.js"></script>
     </body>
 </html>
