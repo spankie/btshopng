@@ -57,7 +57,7 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 		SignupError   string
 	}{}
 
-	data.LoginMessage = "Login"
+	data.LoginMessage = ""
 	data.SignupError = ""
 
 	// Redirect user to consent page to ask for permission
@@ -74,6 +74,102 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// check if POST data are set and validate them
+	// I feel SignupPageHandler() and this function should share the same struct for better memory conservation
+	data := struct {
+		FBAuthURL     string
+		GoogleAuthURL string
+		LoginMessage  string
+		SignupError   string
+	}{}
+
+	data.LoginMessage = ""
+	data.SignupError = ""
+
+	// This is set here so that when there are any errors from the signup process,
+	// the link will be passed to the template alongside the errors.
+	data.FBAuthURL = FBOauthConf.AuthCodeURL("state", oauth2.AccessTypeOffline)
+
+	r.ParseForm()
+
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+
+	if email == "" && password == "" {
+
+		data.LoginMessage = "Please Fill out all required Fields"
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
+		return
+
+	}
+
+	user := models.User{
+		Email: email,
+	}
+
+	// Thinking of making this a standalone function (CheckUser()) for proper memory management
+	result, err := user.CheckUser(config.GetConf())
+
+	if err != nil {
+		// data.LoginMessage = err.Error()
+		data.LoginMessage = "Username or password incorrect"
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
+		return
+	}
+
+	err = bcrypt.CompareHashAndPassword(result.Password, []byte(password))
+	if err != nil {
+		// password is incorrect
+		data.LoginMessage = "Username or password incorrect"
+		log.Println("db pass: ", result.Password, "form pass: ", password)
+		// log.Println("User: ", result)
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
+		return
+	}
+
+	// data.LoginMessage = "You should be logged in by now"
+	// tmp := GetTemplates().Lookup("signin_signup.html")
+	// tmp.Execute(w, data)
+	// log.Println("User: ", result)
+
+	//// THE NEXT FEW LINES PROBABLY SHOULD HAPPEN IN ANOTHER FUNCTION SINCE IT IS USED BY THESE THREE HANDLERS
+	// LOGINHANDLER, SIGNUP HANDLER AND FB HANDLER.
+
+	// If all goes well, generate a token for the cookie
+	loginResp, err := GenerateJWT(result)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/signup", 301)
+		return
+	}
+	// Create cookie
+	expire := time.Now().AddDate(0, 0, 1)
+	// I don't really know if the Name of the token should change
+	// from the one you used at FBOauthRedirectHandler()
+	cookie := http.Cookie{Name: "AuthToken", Value: loginResp.Token, Path: "/", Expires: expire, MaxAge: 86400}
+	// Set cookie
+	http.SetCookie(w, &cookie)
+	// send the user to thier profile page
+	http.Redirect(w, r, "/profile", 301)
+
+	// **** user.Get() returns the same user unchanged ****
+
+	// Check if email matches any in the DB
+	// nuser, err := user.Get(config.GetConf())
+	// if err != nil {
+	// 	log.Println("LOGIN ERROR: ", err, " USER: ", nuser)
+	// 	data.LoginMessage = "Could not Sign you in"
+	// 	tmp := GetTemplates().Lookup("signin_signup.html")
+	// 	tmp.Execute(w, data)
+	// 	return
+	// }
+
+	// log.Println("USER: ", nuser)
+	// data.LoginMessage = "You are logged in"
+	// tmp := GetTemplates().Lookup("signin_signup.html")
+	// tmp.Execute(w, data)
 }
 
 // SignupHandler handles the signup process for in app signup
@@ -122,8 +218,18 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		Password:             password,
 	}
 
+	// CHECK IF THE EMAIL HAS ALREADY BEEN USED BEFORE.
+	_, err := user.CheckUser(config.GetConf())
+	if err != nil {
+		data.SignupError = "Email address has already been used."
+		tmp := GetTemplates().Lookup("signin_signup.html")
+		tmp.Execute(w, data)
+		return
+	}
+	// *** Upsert is replacing documents on the collection. ***
+
 	// Upsert the user data to the db
-	err := user.Upsert(config.GetConf())
+	err = user.Upsert(config.GetConf())
 	if err != nil {
 		log.Println(err)
 		data.SignupError = "Could not Sign you up right now. Try Again"
@@ -131,6 +237,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		tmp.Execute(w, data)
 		return
 	}
+
+	// note: Userget(r) is passing a string to User.Password instead of []byte
 
 	// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
 

@@ -76,3 +76,31 @@ func (user User) Get(c *config.Conf) (User, error) {
 	}
 	return user, nil
 }
+
+// CheckUser checks if a user exists in the database
+func (user User) CheckUser(c *config.Conf) (User, error) {
+
+	mgoSession := c.Database.Session.Copy()
+	defer mgoSession.Close()
+
+	collection := c.Database.C(config.USERCOLLECTION).With(mgoSession)
+
+	result := User{}
+	// log.Println("user.Email: ", user.Email)
+
+	err := collection.Find(bson.M{"email": user.Email}).One(&result)
+	if err != nil {
+		log.Println("User not found:", err)
+		// log.Println("error User: ", user)
+
+		// return result, errors.New("Username or password is incorrect (no user)")
+		return result, err
+	}
+
+	// log.Println("USER: ", user, "result:", result)
+	// if result.Name == "" {
+	// 	return result, errors.New("Username or Password is incorrect(no user)")
+	// }
+
+	return result, nil
+}
