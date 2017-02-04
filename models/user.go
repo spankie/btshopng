@@ -104,3 +104,20 @@ func (user User) CheckUser(c *config.Conf) (User, error) {
 
 	return result, nil
 }
+
+// Insert : inserts user data to the DB
+func (user User) Insert(c *config.Conf) error {
+
+	mgoSession := c.Database.Session.Copy()
+	defer mgoSession.Close()
+
+	collection := c.Database.C(config.USERCOLLECTION).With(mgoSession)
+
+	err := collection.Insert(user)
+	if err != nil {
+		log.Println("Could not insert into the DB")
+		return err
+	}
+
+	return nil
+}

@@ -182,7 +182,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		SignupError   string
 	}{}
 
-	data.LoginMessage = "Login"
+	data.LoginMessage = ""
 	data.SignupError = ""
 
 	// This is set here so that when there are any errors from the signup process,
@@ -220,24 +220,30 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	// CHECK IF THE EMAIL HAS ALREADY BEEN USED BEFORE.
 	_, err := user.CheckUser(config.GetConf())
-	if err != nil {
+	if err == nil {
 		data.SignupError = "Email address has already been used."
 		tmp := GetTemplates().Lookup("signin_signup.html")
 		tmp.Execute(w, data)
 		return
 	}
-	// *** Upsert is replacing documents on the collection. ***
+	// *** Upsert is replacing documents on the collection. Does not insert new ones***
 
 	// Upsert the user data to the db
-	err = user.Upsert(config.GetConf())
+	// err = user.Upsert(config.GetConf())
+	// if err != nil {
+	// 	log.Println(err)
+	// 	data.SignupError = "Could not Sign you up rigt now. Try Again"
+	// 	tmp := GetTemplates().Lookup("signin_signup.html")
+	// 	tmp.Execute(w, data)
+	// 	return
+	// }
+	err = user.Insert(config.GetConf())
 	if err != nil {
-		log.Println(err)
-		data.SignupError = "Could not Sign you up right now. Try Again"
+		data.SignupError = "Could not sign you up. Try again."
 		tmp := GetTemplates().Lookup("signin_signup.html")
 		tmp.Execute(w, data)
 		return
 	}
-
 	// note: Userget(r) is passing a string to User.Password instead of []byte
 
 	// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
