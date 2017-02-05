@@ -10,21 +10,21 @@ import (
 )
 
 type User struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID    string `json:"id" bson:",omitempty"`
+	Name  string `json:"name" bson:",omitempty"`
+	Email string `json:"email" bson:",omitempty"`
 	Image struct {
-		URL string `json:"url"`
-	} `json:"image"`
+		URL string `json:"url" bson:",omitempty"`
+	} `json:"image" bson:",omitempty"`
 	FBPicture struct {
 		Data struct {
-			URL string `json:"url"`
-		} `json:"data"`
-	} `json:"picture"`
-	Link                 string `json:"link"`
-	DateCreated          time.Time
-	FormattedDateCreated string
-	Password             []byte
+			URL string `json:"url" bson:",omitempty"`
+		} `json:"data" bson:",omitempty"`
+	} `json:"picture" bson:",omitempty"`
+	Link                 string    `json:"link" bson:",omitempty"`
+	DateCreated          time.Time `bson:",omitempty"`
+	FormattedDateCreated string    `bson:",omitempty"`
+	Password             []byte    `bson:",omitempty"`
 }
 
 func (user User) Upsert(c *config.Conf) error {
@@ -43,11 +43,12 @@ func (user User) Upsert(c *config.Conf) error {
 				"email": user.Email,
 			},
 		},
-	}, user)
+	}, bson.M{"$set": user})
 	if err != nil {
 		log.Println(err)
 		return err
 	}
+	log.Println("upsert user:", user)
 	return nil
 }
 
