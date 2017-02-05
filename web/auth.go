@@ -87,12 +87,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+	// Had to pass 0 (or any other unlikely id) else the Get Function returns
+	// the first document with ANY id.
 	user := models.User{
+		ID:    "0",
 		Email: email,
 	}
 
-	// Thinking of making this a standalone function (CheckUser()) for proper memory management
-	result, err := user.CheckUser(config.GetConf())
+	// check if the any user matches with the email.
+	result, err := user.Get(config.GetConf())
 
 	if err != nil {
 		// redirect to signup?loginerror=incorrect
@@ -108,11 +111,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("db pass: ", result.Password, "form pass: ", password)
 		return
 	}
-
-	// data.LoginMessage = "You should be logged in by now"
-	// tmp := GetTemplates().Lookup("signin_signup.html")
-	// tmp.Execute(w, data)
-	// log.Println("User: ", result)
 
 	//// THE NEXT FEW LINES PROBABLY SHOULD HAPPEN IN ANOTHER FUNCTION SINCE IT IS USED BY THESE THREE HANDLERS
 	// LOGINHANDLER, SIGNUP HANDLER AND FB HANDLER.
@@ -175,6 +173,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	// create the user data
 	user := models.User{
+		ID:                   "0",
 		Name:                 fullName,
 		Email:                email,
 		DateCreated:          now,
@@ -183,7 +182,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// CHECK IF THE EMAIL HAS ALREADY BEEN USED BEFORE.
-	_, err := user.CheckUser(config.GetConf())
+	_, err := user.Get(config.GetConf())
 	if err == nil {
 		// redirect to signup?signuperror=used
 		http.Redirect(w, r, "/signup?signuperror=Email+address+has+already+been+used", 301)
