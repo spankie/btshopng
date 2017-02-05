@@ -9,7 +9,7 @@
 
         <!-- Beginning if explore section -->
         <section class="cf vh-100 flex flex-row items-center justify-center">
-          <section class="w-60-ns pa3 pv4  shadow-4 bg-white">
+          <section class="w-60-ns pa3 mt4 shadow-4 bg-white">
             <div>
               <h2 class="tc">Register or Sign in</h2>
             </div>
@@ -20,8 +20,10 @@
                 <img src="/public/img/google-plus-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with Google Plus</a>
             </div>
             <div class="bt bb b--near-white pv2 bw1 cf">
+              
               <section class="w-50  dib fl pa4 ">
-                <p class="fw2 red f6">{{.LoginMessage}}</p>
+                <h4>Login</h4>
+                <p class="fw2 red f6 pt1">{{.LoginError}}</p>
                 <form class="w-100" action="/login" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Email</label>
@@ -37,7 +39,8 @@
                 </form>
               </section>
               <section class="w-50  dib fl pa4 bl bw1 b--near-white">
-                <p class="fw2 red f6">{{.SignupMessage}}</p>
+                <h4>Signup</h4>
+                <p class="fw2 red f6 cf pt1">{{.SignupError}}</p>
                 <form action="/signup" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Name</label>

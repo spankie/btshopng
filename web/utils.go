@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/mitchellh/mapstructure"
 	"github.com/btshopng/btshopng/config"
 	"github.com/btshopng/btshopng/models"
+	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/mitchellh/mapstructure"
 )
 
 //Userget reads the json web token(JWT) content from context and marshals it ito a user struct,
