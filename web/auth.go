@@ -53,12 +53,13 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		FBAuthURL     string
 		GoogleAuthURL string
-		LoginMessage  string
+		LoginError    string
 		SignupError   string
 	}{}
 
-	data.LoginMessage = ""
-	data.SignupError = ""
+	// Get the error parameters and respond accordingly
+	data.LoginError = r.URL.Query().Get("loginerror")
+	data.SignupError = r.URL.Query().Get("signuperror")
 
 	// Redirect user to consent page to ask for permission
 	// for the scopes specified above.
@@ -73,32 +74,15 @@ func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	// check if POST data are set and validate them
-	// I feel SignupPageHandler() and this function should share the same struct for better memory conservation
-	data := struct {
-		FBAuthURL     string
-		GoogleAuthURL string
-		LoginMessage  string
-		SignupError   string
-	}{}
-
-	data.LoginMessage = ""
-	data.SignupError = ""
-
-	// This is set here so that when there are any errors from the signup process,
-	// the link will be passed to the template alongside the errors.
-	data.FBAuthURL = FBOauthConf.AuthCodeURL("state", oauth2.AccessTypeOffline)
-
+	// Parse form parameters
 	r.ParseForm()
 
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 
-	if email == "" && password == "" {
-
-		data.LoginMessage = "Please Fill out all required Fields"
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
+	if email == "" || password == "" {
+		// redirect to signup?loginerror=required
+		http.Redirect(w, r, "/signup?loginerror=Please+fill+out+all+required+fields", 301)
 		return
 
 	}
@@ -111,21 +95,17 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := user.CheckUser(config.GetConf())
 
 	if err != nil {
-		// data.LoginMessage = err.Error()
-		data.LoginMessage = "Username or password incorrect"
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
+		// redirect to signup?loginerror=incorrect
+		http.Redirect(w, r, "/signup?loginerror=Username+or+password+incorrect", 301)
 		return
 	}
 
 	err = bcrypt.CompareHashAndPassword(result.Password, []byte(password))
 	if err != nil {
-		// password is incorrect
-		data.LoginMessage = "Username or password incorrect"
+		// redirect to signup?loginerror=incorrect
+		http.Redirect(w, r, "/signup?loginerror=Username+or+password+incorrect", 301)
+
 		log.Println("db pass: ", result.Password, "form pass: ", password)
-		// log.Println("User: ", result)
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
 		return
 	}
 
@@ -174,21 +154,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // SignupHandler handles the signup process for in app signup
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
-	// I feel SignupPageHandler() and this function should share the same struct for better memory conservation
-	data := struct {
-		FBAuthURL     string
-		GoogleAuthURL string
-		LoginMessage  string
-		SignupError   string
-	}{}
-
-	data.LoginMessage = ""
-	data.SignupError = ""
-
-	// This is set here so that when there are any errors from the signup process,
-	// the link will be passed to the template alongside the errors.
-	data.FBAuthURL = FBOauthConf.AuthCodeURL("state", oauth2.AccessTypeOffline)
-
+	// Parse form parameters
 	r.ParseForm()
 
 	fullName := r.FormValue("name")
@@ -196,11 +162,9 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	passwd := r.FormValue("passwd")
 
 	// Check if the Post data not empty and validate them.
-	if fullName == "" && email == "" && passwd == "" {
-
-		data.SignupError = "Please Fill out all required Fields"
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
+	if fullName == "" || email == "" || passwd == "" {
+		// redirect to signup?signuperror=empty
+		http.Redirect(w, r, "/signup?signuperror=Please+fill+out+all+required+fields", 301)
 		return
 
 	}
@@ -221,9 +185,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	// CHECK IF THE EMAIL HAS ALREADY BEEN USED BEFORE.
 	_, err := user.CheckUser(config.GetConf())
 	if err == nil {
-		data.SignupError = "Email address has already been used."
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
+		// redirect to signup?signuperror=used
+		http.Redirect(w, r, "/signup?signuperror=Email+address+has+already+been+used", 301)
 		return
 	}
 	// *** Upsert is replacing documents on the collection. Does not insert new ones***
@@ -239,9 +202,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	// }
 	err = user.Insert(config.GetConf())
 	if err != nil {
-		data.SignupError = "Could not sign you up. Try again."
-		tmp := GetTemplates().Lookup("signin_signup.html")
-		tmp.Execute(w, data)
+		// redirect to signup?signuperror=again
+		http.Redirect(w, r, "/signup?signuperror=Could+not+sign+you+up.+Try+again.", 301)
 		return
 	}
 	// note: Userget(r) is passing a string to User.Password instead of []byte

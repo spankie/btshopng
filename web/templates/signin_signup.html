@@ -9,7 +9,7 @@
 
         <!-- Beginning if explore section -->
         <section class="cf vh-100 flex flex-row items-center justify-center">
-          <section class="w-60-ns pa3 pv4  shadow-4 bg-white">
+          <section class="w-60-ns pa3 mt4 shadow-4 bg-white">
             <div>
               <h2 class="tc">Register or Sign in</h2>
             </div>
@@ -23,7 +23,7 @@
               
               <section class="w-50  dib fl pa4 ">
                 <h4>Login</h4>
-                <p class="fw2 red f6 pt1">{{.LoginMessage}}</p>
+                <p class="fw2 red f6 pt1">{{.LoginError}}</p>
                 <form class="w-100" action="/login" method="POST">
                   <div class="pv2 w-100">
                     <label class=" dn w3">Email</label>
