@@ -15,6 +15,7 @@ import (
 	//"golang.org/x/oauth2/google"
 	"github.com/btshopng/btshopng/config"
 	"github.com/btshopng/btshopng/models"
+	"github.com/satori/go.uuid"
 )
 
 //LoginResponse sent to the cllient, carrying the token, upon login
@@ -171,9 +172,13 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	password, _ := bcrypt.GenerateFromPassword([]byte(passwd), bcrypt.DefaultCost)
 	now := time.Now()
 
+	uniqueID := uuid.NewV1()
+
+	id := uniqueID.String()
+	log.Println("id:", id)
 	// create the user data
 	user := models.User{
-		ID:                   "0",
+		ID:                   id,
 		Name:                 fullName,
 		Email:                email,
 		DateCreated:          now,
@@ -188,23 +193,14 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/signup?signuperror=Email+address+has+already+been+used", 301)
 		return
 	}
-	// *** Upsert is replacing documents on the collection. Does not insert new ones***
 
-	// Upsert the user data to the db
-	// err = user.Upsert(config.GetConf())
-	// if err != nil {
-	// 	log.Println(err)
-	// 	data.SignupError = "Could not Sign you up rigt now. Try Again"
-	// 	tmp := GetTemplates().Lookup("signin_signup.html")
-	// 	tmp.Execute(w, data)
-	// 	return
-	// }
-	err = user.Insert(config.GetConf())
+	err = user.Upsert(config.GetConf())
 	if err != nil {
 		// redirect to signup?signuperror=again
 		http.Redirect(w, r, "/signup?signuperror=Could+not+sign+you+up.+Try+again.", 301)
 		return
 	}
+
 	// note: Userget(r) is passing a string to User.Password instead of []byte
 
 	// SHOULD VERIFY EMAIL ADDRESS SENT, HERE.
@@ -216,6 +212,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/signup", 301)
 		return
 	}
+
 	// Create cookie
 	expire := time.Now().AddDate(0, 0, 1)
 	// I don't really know if the Name of the token should change
