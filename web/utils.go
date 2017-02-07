@@ -71,9 +71,14 @@ func GenerateJWT(user models.User) (resp LoginResponse, err error) {
 }
 
 // GetProfileData should be used in all pages that requires users to be logged.
-func GetProfileData(r *http.Request) (struct{ User models.User }, error) {
+func GetProfileData(r *http.Request) (struct {
+	User    models.User
+	Barters []models.Barter
+}, error) {
+
 	data := struct {
-		User models.User
+		User    models.User
+		Barters []models.Barter
 	}{}
 
 	user, err := Userget(r)

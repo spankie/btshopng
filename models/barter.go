@@ -64,8 +64,8 @@ func (barter Barter) Upsert(c *config.Conf) error {
 	return nil
 }
 
-// GetAll Barter by a particular user
-func GetAll(c *config.Conf, id string) ([]Barter, error) {
+// GetAllBarters Barter by a particular user
+func GetAllBarters(c *config.Conf, id string) ([]Barter, error) {
 	mgoSession := c.Database.Session.Copy()
 	defer mgoSession.Close()
 

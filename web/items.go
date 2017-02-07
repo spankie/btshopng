@@ -66,6 +66,8 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("New barter added")
+	// send a notification to the user that the barter has been added.
+	http.Redirect(w, r, "/newitem", 301)
 }
 
 func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +76,11 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		// proper redirect will happen here
 		http.Redirect(w, r, "/login", 301)
+	}
+
+	data.Barters, err = models.GetAllBarters(config.GetConf(), data.User.ID)
+	if err != nil {
+		log.Println("Could not get any barter for this user")
 	}
 
 	tmp := GetTemplates().Lookup("profile_barter_archive.html")

@@ -23,7 +23,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib v-mid bg-white">
-                <img class="dib v-mid" src="/img/envelope.svg" style="width:28px"/>
+                <img class="dib v-mid" src="/public/img/envelope.svg" style="width:28px"/>
                 <span class="dib v-mid">&nbsp;&nbsp;21 messages</span>
               </div>
             </a>
@@ -31,7 +31,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib  bg-white">
-                <img src="/img/chat.svg" style="width:28px" class="dib v-mid"/>
+                <img src="/public/img/chat.svg" style="width:28px" class="dib v-mid"/>
                 <span class="dib v-mid">&nbsp;&nbsp;You have bid on 30 barters so far</span>
               </div>
             </a>
@@ -39,7 +39,7 @@
           <div class="pa2 dib">
             <a href="#" class="link black grow dib">
               <div class="shadow-4 pa3 dib bg-white">
-                <img src="/img/pin-post.svg" style="width:28px" class="dib v-mid"/>
+                <img src="/public/img/pin-post.svg" style="width:28px" class="dib v-mid"/>
                 <span class="dib v-mid">&nbsp;&nbsp;Uploaded 30 Barters so far</span>
               </div>
             </a>
@@ -63,17 +63,18 @@
           <section class="w-75 fl pa1 cf">
             <section class="cf">
               <section class="w-100 fl ph2">
+                {{range $barter := .Barters}}
                 <!-- Barter item -->
                 <a href="#" class="link grow">
                   <div class="shadow-4 bg-white pt3 mb4 ">
-                    <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">#bid657</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
+                    <h3 class="fw4 pa3 pv3"><a href="#" class="link primary">{{ $barter.ID }}</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
                     <div class="pa3 pv2 ">
-                      <h4 class="fw6 primary">What I want?</h4>
-                      <p class="db pt1">A macbook or a really good laptop</p>
+                      <h4 class="fw6 primary">What I Have</h4>
+                      <p class="db pt1">{{ $barter.Have }}</p>
                       <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
                     </div>
                     <div class="pa3 pt2 ">
-                      <h4 class="fw6 primary">What I want?</h4>
+                      <h4 class="fw6 primary">What I Need?</h4>
                       <p class="db pt1">A macbook or a really good laptop</p>
                       <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
                     </div>
@@ -94,8 +95,9 @@
                     </div>
                   </div>
                 </a>
+                {{end}}
                 <!-- end barter item -->
-                <!-- Barter item -->
+                <!-- Barter item
                 <a href="#" class="link grow">
                   <div class="shadow-4 bg-white pt3 mb4 ">
                     <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">#bid46576</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
@@ -126,8 +128,8 @@
                     </div>
                   </div>
                 </a>
-                <!-- end barter item -->
-                <!-- Barter item -->
+                <!-- end barter item --
+                <!-- Barter item --
                 <a href="#" class="link grow">
                   <div class="shadow-4 bg-white pt3 mb4 ">
                     <h3 class="fw4 pa3 pv3"><a href="#" class="link  primary">#bid23 </a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
@@ -176,15 +178,15 @@
           <h2 class="pv5">How it works?</h2>
           <div class="w-80-ns dib">
             <div class="w-33-ns dib">
-              <img src="/img/selectfromphone.png" class="" style="height:12rem;"/>
+              <img src="/public/img/selectfromphone.png" class="" style="height:12rem;"/>
               <p class="fw6 f3 pa2">Register an item you want to batter</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/messagefromuser.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Accept a bid from someone who has what you want</p>
             </div>
             <div class="w-33-ns dib">
-              <img src="/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
+              <img src="/public/img/thumbs.png" class="" style="height:12rem; width:12rem"/>
               <p class="fw6 f3 pa2">Make the exchange and enjoy your life</p>
             </div>
           </div>
