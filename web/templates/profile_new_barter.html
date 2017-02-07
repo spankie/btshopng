@@ -18,9 +18,9 @@
             <div class="w-100 bg-white pa3 shadow-4">
               <h2 class="tc pv2 primary fw6">Quick links</h2>
               <div>
-                <a href="#" class="link db pa3 ">Notifications</a>
-                <a href="#" class="link db pa3 ">Create a barter</a>
-                <a href="#" class="link db pa3 ">Barter Archives</a>
+                <a href="/notifications" class="link db pa3 ">Notifications</a>
+                <a href="/newitem" class="link db pa3 ">Create a barter</a>
+                <a href="/archive" class="link db pa3 ">Barter Archives</a>
               </div>
             </div>
           </section>
@@ -30,10 +30,11 @@
                 <!-- Barter item -->
                 <div class="shadow-4 bg-white pt3 mb4">
                   <h3 class="fw4 pa3 pv3">Create a new barter</h3>
-                  <div class="pa3 pv2 ">
-                    <h4 class="fw6 primary">What I want?</h4>
-                    <textarea class="db pt1 w-100" >A macbook or a really good laptop</textarea>
-                    <small class="dark-gray">item category: <select href="dsd" class="link primary fw6 hover-primary">
+                  <div class="pa3 pv2">
+                    <form action="/newitem" method="POST">
+                    <h4 class="fw6 primary">What I have?</h4>
+                    <textarea class="db pt1 w-100" name="have">A macbook or a really good laptop</textarea>
+                    <small class="dark-gray">item category: <select href="dsd" name="haveCat" class="link primary fw6 hover-primary">
                         <option>laptops and computers</option>
                         <option>Mobile</option>
                         <option>Cars</option>
@@ -42,8 +43,8 @@
                   </div>
                   <div class="pa3 pt2 ">
                     <h4 class="fw6 primary">What I need?</h4>
-                    <textarea class="db pt1 w-100" >A macbook or a really good laptop</textarea>
-                    <small class="dark-gray">item category: <select href="dsd" class="link primary fw6 hover-primary">
+                    <textarea class="db pt1 w-100" name="need">A macbook or a really good laptop</textarea>
+                    <small class="dark-gray">item category: <select href="dsd" name="needCat" class="link primary fw6 hover-primary">
                         <option>laptops and computers</option>
                         <option>Mobile</option>
                         <option>Cars</option>
@@ -52,7 +53,7 @@
                   </div>
                   <div class="pa3 pt2 ">
                     <h4 class="fw6 primary">Your location</h4>
-                    <select class="db pa3 w-100" >
+                    <select class="db pa3 w-100" name="location">
                       <option>Calabar</option>
                       <option>Lagos</option>
                       <option>Port harcourt</option>
@@ -80,8 +81,9 @@
             </section>
             <div class="tc  pa4 cf w-100 db ">
               <br/>
-              <a href="#" class="dib link pa3 bg-white shadow-4 ba black v-mid">Submit</a>
+              <input type="submit" class="dib link pa3 bg-white shadow-4 ba black v-mid" name="savebarter" value="Submit">
             </div>
+            </form>
           </section>
         </section>
       </section>

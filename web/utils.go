@@ -1,6 +1,7 @@
 package web
 
 import (
+	"log"
 	"net/http"
 	"time"
 
@@ -67,4 +68,27 @@ func GenerateJWT(user models.User) (resp LoginResponse, err error) {
 
 	return
 
+}
+
+// GetProfileData should be used in all pages that requires users to be logged.
+func GetProfileData(r *http.Request) (struct{ User models.User }, error) {
+	data := struct {
+		User models.User
+	}{}
+
+	user, err := Userget(r)
+	if err != nil {
+		log.Println(err)
+		return data, err
+	}
+	//log.Println(user)
+
+	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
+
+	data.User, err = user.Get(config.GetConf())
+	if err != nil {
+		log.Println(err)
+		return data, err
+	}
+	return data, nil
 }

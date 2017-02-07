@@ -27,7 +27,10 @@ var (
 )
 
 const (
+	// USERCOLLECTION collection for user
 	USERCOLLECTION = "users"
+	// BARTERCOLLECTION is a collection of barters
+	BARTERCOLLECTION = "barter"
 )
 
 // Init initialize the configurations

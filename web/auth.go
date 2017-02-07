@@ -108,7 +108,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// redirect to signup?loginerror=incorrect
 		http.Redirect(w, r, "/signup?loginerror=Username+or+password+incorrect", 301)
-
+		// log.Println("\nresult User: ", result, "\n")
 		log.Println("db pass: ", result.Password, "form pass: ", password)
 		return
 	}
