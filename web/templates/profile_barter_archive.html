@@ -71,12 +71,12 @@
                     <div class="pa3 pv2 ">
                       <h4 class="fw6 primary">What I Have</h4>
                       <p class="db pt1">{{ $barter.Have }}</p>
-                      <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
+                      <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">{{ $barter.HaveCategory }}</a></small>
                     </div>
                     <div class="pa3 pt2 ">
                       <h4 class="fw6 primary">What I Need?</h4>
-                      <p class="db pt1">A macbook or a really good laptop</p>
-                      <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">laptops and computers</a></small>
+                      <p class="db pt1">{{ $barter.Need }}</p>
+                      <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">{{ $barter.NeedCategory }}</a></small>
                     </div>
                     <div class="cf pt3">
                       <a data-lightbox="image-1" data-title="My caption" href="//placehold.it/400x400" class="dib w-third fl pr1">

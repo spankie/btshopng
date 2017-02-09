@@ -20,11 +20,12 @@ type Barter struct {
 	NeedCategory string
 	Location     string
 	DateCreated  time.Time
-	Status       string   // status of the barter: available or not.
+	Status       bool     // status of the barter: available or not.
 	Images       []string // array of string to the path where the images will be stored.
 
 }
 
+// Get returns a particular barter object given the id and user id.
 func (barter Barter) Get(c *config.Conf) (Barter, error) {
 	mgoSession := c.Database.Session.Copy()
 	defer mgoSession.Close()
@@ -64,14 +65,14 @@ func (barter Barter) Upsert(c *config.Conf) error {
 	return nil
 }
 
-// GetAllBarters Barter by a particular user
-func GetAllBarters(c *config.Conf, id string) ([]Barter, error) {
+// GetAll Barter by a particular user
+func (barter Barter) GetAll(c *config.Conf) ([]Barter, error) {
 	mgoSession := c.Database.Session.Copy()
 	defer mgoSession.Close()
 
 	collection := c.Database.C(config.BARTERCOLLECTION).With(mgoSession)
 	result := []Barter{}
-	err := collection.Find(bson.M{"userid": id}).All(&result)
+	err := collection.Find(bson.M{"userid": barter.UserID}).All(&result)
 	if err != nil {
 		return result, err
 	}
