@@ -69,11 +69,15 @@ func main() {
 	router.Get("/signup", commonHandlers.ThenFunc(web.SignupPageHandler))
 	router.Get("/profile", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ProfileHandler))
 	router.Get("/fb_oauth_redirect", commonHandlers.ThenFunc(web.FBOauthRedirectHandler))
+	router.Get("/newitem", commonHandlers.ThenFunc(web.NewItemHandler))
+	router.Get("/archive", commonHandlers.ThenFunc(web.ArchiveHandler))
+	router.Get("/notifications", commonHandlers.ThenFunc(web.NotificationsHandler))
 	// router.Get("/google_oauth_redirect", commonHandlers.ThenFunc(web.OauthRedirectHandler))
 
 	// Post handlers
 	router.Post("/login", commonHandlers.ThenFunc(web.LoginHandler))
 	router.Post("/signup", commonHandlers.ThenFunc(web.SignupHandler))
+	router.Post("/newitem", commonHandlers.ThenFunc(web.SaveNewItemHandler))
 
 	//router.ServeFiles("/static/*filepath", http.Dir("./build/static"))
 

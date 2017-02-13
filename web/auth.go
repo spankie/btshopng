@@ -108,7 +108,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// redirect to signup?loginerror=incorrect
 		http.Redirect(w, r, "/signup?loginerror=Username+or+password+incorrect", 301)
-
+		// log.Println("\nresult User: ", result, "\n")
 		log.Println("db pass: ", result.Password, "form pass: ", password)
 		return
 	}
@@ -193,6 +193,8 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/signup?signuperror=Email+address+has+already+been+used", 301)
 		return
 	}
+	// Before the signup gets here, it means the email has not been used before. because of the User.Get() used above.
+	// If there is a way to check if the already used email is from fb or G+ then the document will be updated on that condition.
 
 	err = user.Upsert(config.GetConf())
 	if err != nil {
@@ -209,7 +211,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	loginResp, err := GenerateJWT(user)
 	if err != nil {
 		log.Println(err)
-		http.Redirect(w, r, "/signup", 301)
+		http.Redirect(w, r, "/signup?signuperror=Could+not+sign+you+up.+Try+again.", 301)
 		return
 	}
 
