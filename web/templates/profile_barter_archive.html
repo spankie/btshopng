@@ -63,13 +63,13 @@
           <section class="w-75 fl pa1 cf">
             <section class="cf">
               <section class="w-100 fl ph2">
-                {{range $barter := .Barters}}
+                {{range $index, $barter := .Barters}}
                 <!-- Barter item -->
                 <a href="#" class="link grow">
                   <div class="shadow-4 bg-white pt3 mb4 ">
                     <h3 class="fw4 pa3 pv3"><a href="#" class="link primary">{{ $barter.ID }}</a>, <small>in <a href="#" class="link primary dim">Calabar</a></small></h3>
                     <div class="pa3 pv2 ">
-                      <h4 class="fw6 primary">What I Have</h4>
+                      <h4 class="fw6 primary">What I Have {{$index}}</h4>
                       <p class="db pt1">{{ $barter.Have }}</p>
                       <small class="dark-gray">under <a href="dsd" class="link primary fw6 hover-primary">{{ $barter.HaveCategory }}</a></small>
                     </div>
