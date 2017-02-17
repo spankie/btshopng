@@ -20,7 +20,8 @@ func NewItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := Userget(r)
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println("\nUser error:", err, "\n")
 	}
 	//log.Println(user)
 
@@ -28,7 +29,8 @@ func NewItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println("\nUser error:", err, "\n")
 	}
 	data := Data{User: result}
 
@@ -42,12 +44,14 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := Userget(r)
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println("\nUser error:", err, "\n")
 	}
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println("\nUser error:", err, "\n")
 	}
 
 	have := r.FormValue("have")
@@ -90,15 +94,16 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := Userget(r)
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println(err)
 	}
-	//log.Println(user)
 
 	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println(err)
 	}
 
 	// Supply UserID to be used for retrieving all barters.
@@ -119,5 +124,33 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmp := GetTemplates().Lookup("profile_barter_archive.html")
+	tmp.Execute(w, data)
+}
+
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+
+	data := struct {
+		Barters  []models.Barter
+		Query    string
+		Location string
+	}{}
+
+	searchItem := r.URL.Query()
+
+	log.Println("Search item: ", searchItem["searchItem"])
+	data.Query = searchItem.Get("searchItem")
+	// TODO: GET USER'S GEO LOCATION AS DEFAULT OR USER'S PROFILE LOCATION
+	data.Location = "CALABAR"
+
+	data.Barters = []models.Barter{}
+	barter := models.Barter{}
+	var err error = nil
+
+	data.Barters, err = barter.GetAllSearch(config.GetConf(), data.Query)
+	if err != nil {
+		log.Println(err)
+	}
+
+	tmp := GetTemplates().Lookup("list.html")
 	tmp.Execute(w, data)
 }

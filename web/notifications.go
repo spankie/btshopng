@@ -1,6 +1,7 @@
 package web
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/btshopng/btshopng/models"
@@ -10,7 +11,8 @@ func NotificationsHandler(w http.ResponseWriter, r *http.Request) {
 
 	user, err := Userget(r)
 	if err != nil {
-		http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
+		log.Println("User error:", err)
 	}
 	//log.Println(user)
 

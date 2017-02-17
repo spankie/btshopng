@@ -79,3 +79,40 @@ func (barter Barter) GetAll(c *config.Conf) ([]Barter, error) {
 
 	return result, nil
 }
+
+// Still not sure if this function will be needed....
+
+// GetAllBarters returns all available Barters
+func (barter Barter) GetAllBarters(c *config.Conf) ([]Barter, error) {
+	mgoSession := c.Database.Session.Copy()
+	defer mgoSession.Close()
+
+	collection := c.Database.C(config.BARTERCOLLECTION).With(mgoSession)
+	result := []Barter{}
+	err := collection.Find(bson.M{"status": true}).All(&result)
+	if err != nil {
+		return result, err
+	}
+
+	return result, nil
+}
+
+// GetAllSearch returns array of batters that matches s(string)
+func (barter Barter) GetAllSearch(c *config.Conf, s string) ([]Barter, error) {
+	mgoSession := c.Database.Session.Copy()
+	defer mgoSession.Close()
+
+	collection := c.Database.C(config.BARTERCOLLECTION).With(mgoSession)
+	result := []Barter{}
+	err := collection.Find(bson.M{
+		"$or": []bson.M{
+			bson.M{"have": bson.RegEx{Pattern: s, Options: "i"}}, // options `i` for case insensitive matching
+			bson.M{"need": bson.RegEx{Pattern: s, Options: "i"}}, // options `i` for case insensitive matching
+		},
+	}).All(&result)
+	if err != nil {
+		return result, err
+	}
+
+	return result, nil
+}
