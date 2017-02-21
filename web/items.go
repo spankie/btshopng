@@ -21,17 +21,18 @@ func NewItemHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := Userget(r)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Printf("User error: %+v", err)
 	}
 	//log.Println(user)
-
-	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Println("\nUser error:", err)
 	}
+
+	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
+
 	data := Data{User: result}
 
 	tmp := GetTemplates().Lookup("profile_new_barter.html")
@@ -45,13 +46,13 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := Userget(r)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Printf("User error: %+v", err)
 	}
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Printf("User error: %+v", err)
 	}
 
 	have := r.FormValue("have")
@@ -90,15 +91,12 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/newitem", 301)
 }
 
-func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
-
+func ItemsArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := Userget(r)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
 		log.Println(err)
 	}
-
-	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
@@ -109,14 +107,8 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	// Supply UserID to be used for retrieving all barters.
 	barter := models.Barter{UserID: result.ID}
 
+	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
 	data := Data{User: result}
-
-	// data := struct {
-	// 	User    models.User
-	// 	Barters []models.Barter
-	// }{
-	// 	User: user,
-	// }
 
 	data.Barters, err = barter.GetAll(config.GetConf())
 	if err != nil {

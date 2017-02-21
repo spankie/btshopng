@@ -11,8 +11,8 @@ import (
 
 	"context"
 
-	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/btshopng/btshopng/messages"
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
 // Middlewares
@@ -113,7 +113,7 @@ func FrontAuthHandler(next http.Handler) http.Handler {
 			return
 		}
 		tokenValue := cookie.Value
-		log.Println(tokenValue)
+		//log.Println(tokenValue)
 
 		// validate the token
 		token, err := jwt.Parse(tokenValue, func(token *jwt.Token) (interface{}, error) {

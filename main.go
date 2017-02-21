@@ -66,18 +66,19 @@ func main() {
 	log.Println(commonHandlers)
 
 	router.Get("/", commonHandlers.ThenFunc(web.HomeHandler))
-	router.Get("/signup", commonHandlers.ThenFunc(web.SignupPageHandler))
 	router.Get("/profile", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ProfileHandler))
+
 	router.Get("/fb_oauth_redirect", commonHandlers.ThenFunc(web.FBOauthRedirectHandler))
-	router.Get("/newitem", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.NewItemHandler))
-	router.Get("/archive", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ArchiveHandler))
+	router.Post("/login", commonHandlers.ThenFunc(web.LoginHandler))
+	router.Post("/signup", commonHandlers.ThenFunc(web.SignupHandler))
+	router.Get("/signup", commonHandlers.ThenFunc(web.SignupPageHandler))
+
+	router.Get("/archive", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ItemsArchiveHandler))
 	router.Get("/notifications", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.NotificationsHandler))
 	router.Get("/search", commonHandlers.ThenFunc(web.SearchHandler))
 	// router.Get("/google_oauth_redirect", commonHandlers.ThenFunc(web.OauthRedirectHandler))
 
-	// Post handlers
-	router.Post("/login", commonHandlers.ThenFunc(web.LoginHandler))
-	router.Post("/signup", commonHandlers.ThenFunc(web.SignupHandler))
+	router.Get("/newitem", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.NewItemHandler))
 	router.Post("/newitem", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.SaveNewItemHandler))
 
 	//router.ServeFiles("/static/*filepath", http.Dir("./build/static"))
