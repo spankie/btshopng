@@ -1,6 +1,7 @@
 package web
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -48,8 +49,9 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
 		log.Printf("User error: %+v", err)
 	}
+	conf := config.GetConf()
 
-	result, err := user.Get(config.GetConf())
+	result, err := user.Get(conf)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
 		log.Printf("User error: %+v", err)
@@ -60,13 +62,42 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	need := r.FormValue("need")
 	needCat := r.FormValue("needCat")
 	location := r.FormValue("location")
+	itemDataImagesString := r.FormValue("itemImageDataInput")
 
 	if have == "" || haveCat == "" || need == "" || needCat == "" || location == "" {
 		http.Redirect(w, r, "/newitem?newerror=Fill+out+all+fields", 301)
 		return
 	}
 
+	itemDataImages := []string{}
+
+	err = json.Unmarshal([]byte(itemDataImagesString), &itemDataImages)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(itemDataImages)
+
+	Images := []models.Image{}
+
+	for _, bas64Image := range itemDataImages {
+		img := models.Image{}
+		imgUUID := uuid.NewV1().String()
+		fullImageName := "product_images/" + imgUUID
+		ThumbnailImageName := "product_thumbnail" + imgUUID
+		img.FullSize, err = UploadBase64Image(conf.S3Bucket, bas64Image, fullImageName, 780)
+		if err != nil {
+			log.Println(err)
+		}
+		img.Thumbnail, err = UploadBase64Image(conf.S3Bucket, bas64Image, ThumbnailImageName, 340)
+		if err != nil {
+			log.Println(err)
+		}
+
+		Images = append(Images, img)
+	}
+
 	uniqueID := uuid.NewV1().String()
+
 	// create a barter model....
 	barter := models.Barter{
 		ID:           uniqueID,
@@ -78,10 +109,10 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 		Location:     location,
 		DateCreated:  time.Now(),
 		Status:       true,
-		Images:       []string{"", "", ""},
+		Images:       Images,
 	}
 
-	err = barter.Upsert(config.GetConf())
+	err = barter.Upsert(conf)
 	if err != nil {
 		http.Redirect(w, r, "/newitem?error=Could+not+save+your+barter", 301)
 		return
