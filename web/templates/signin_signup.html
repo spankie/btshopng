@@ -4,7 +4,7 @@
   {{ template "head"}}
     <body class=" avenir " style="background-color:#f9f9f9">
         <!-- main nav -->
-        {{template "nav_menu"}}
+        {{template "nav_menu" .User}}
         <!-- End main nav -->
 
         <!-- Beginning if explore section -->
@@ -20,7 +20,7 @@
                 <img src="/public/img/google-plus-icon.svg" style="width:18px"/>&nbsp;&nbsp;&nbsp;login with Google Plus</a>
             </div>
             <div class="bt bb b--near-white pv2 bw1 cf">
-              
+
               <section class="w-50  dib fl pa4 ">
                 <h4>Login</h4>
                 <p class="fw2 red f6 pt1">{{.LoginError}}</p>
@@ -93,7 +93,7 @@
         </section>
         <!-- End Action -->
 
-        
+
         {{template "footer_share_area"}}
         <!-- Footer -->
         {{template "footer"}}

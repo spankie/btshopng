@@ -65,7 +65,7 @@ func main() {
 	router := NewRouter()
 	log.Println(commonHandlers)
 
-	router.Get("/", commonHandlers.ThenFunc(web.HomeHandler))
+	router.Get("/", commonHandlers.Append(web.AuthCheckerMiddleware).ThenFunc(web.HomeHandler))
 	router.Get("/profile", commonHandlers.Append(web.FrontAuthHandler).ThenFunc(web.ProfileHandler))
 
 	router.Get("/fb_oauth_redirect", commonHandlers.ThenFunc(web.FBOauthRedirectHandler))

@@ -21,7 +21,7 @@ func NotificationsHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		User models.User
 	}{User: user}
-	log.Printf("%+v", data)
+	//log.Printf("%+v", data)
 	tmp := GetTemplates().Lookup("profile_notifications.html")
 	tmp.Execute(w, data)
 }

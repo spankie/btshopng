@@ -32,10 +32,21 @@
         </button>
       </form>
       <a class="link black dib ph3 dim" href="/">Home</a>
+      {{ if ne .Name ""}}
+      <a class="link black dib v-mid ph3 dim" href="/profile">
+        {{if ne .Image.URL ""}}
+          <img src="{{.Image.URL}}" style="width:32px" class="dib ph2 v-mid"/>
+        {{else}}
+          <img src="/public/img/user.svg" style="width:32px" class="dib ph2 v-mid"/>
+        {{end}}
+        <span class="dib v-mid">{{.Name}}</span>
+      </a>
+      {{else}}
       <a class="link black dib v-mid ph3 dim" href="/signup">
         <img src="/public/img/user.svg" style="width:32px" class="dib ph2"/>
         <span class="dib">login/<br/>signup</span>
       </a>
+      {{end}}
     </div>
   </div>
 </nav>

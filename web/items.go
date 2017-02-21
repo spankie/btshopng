@@ -12,7 +12,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type Data struct {
+type BartersListData struct {
 	User    models.User
 	Barters []models.Barter
 }
@@ -34,7 +34,7 @@ func NewItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
 
-	data := Data{User: result}
+	data := BartersListData{User: result}
 
 	tmp := GetTemplates().Lookup("profile_new_barter.html")
 	tmp.Execute(w, data)
@@ -139,7 +139,7 @@ func ItemsArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	barter := models.Barter{UserID: result.ID}
 
 	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
-	data := Data{User: result}
+	data := BartersListData{User: result}
 
 	data.Barters, err = barter.GetAll(config.GetConf())
 	if err != nil {
@@ -151,12 +151,17 @@ func ItemsArchiveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-
+	user, err := Userget(r)
+	if err != nil {
+		log.Println(err)
+	}
 	data := struct {
 		Barters  []models.Barter
 		Query    string
 		Location string
+		User     models.User
 	}{}
+	data.User = user
 
 	searchItem := r.URL.Query()
 
@@ -167,7 +172,6 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	data.Barters = []models.Barter{}
 	barter := models.Barter{}
-	var err error = nil
 
 	data.Barters, err = barter.GetAllSearch(config.GetConf(), data.Query)
 	if err != nil {
