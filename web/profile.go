@@ -15,8 +15,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	//log.Println(user)
 
-	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
-
 	data := struct {
 		User models.User
 	}{}
@@ -24,7 +22,8 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println(data)
+
+	data.User.FormattedDateCreated = user.DateCreated.Format("January 2006")
 	tmp := GetTemplates().Lookup("profile_new_barter.html")
 	tmp.Execute(w, data)
 }

@@ -17,29 +17,6 @@ type BartersListData struct {
 	Barters []models.Barter
 }
 
-func NewItemHandler(w http.ResponseWriter, r *http.Request) {
-
-	user, err := Userget(r)
-	if err != nil {
-		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Printf("User error: %+v", err)
-	}
-	//log.Println(user)
-
-	result, err := user.Get(config.GetConf())
-	if err != nil {
-		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err)
-	}
-
-	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
-
-	data := BartersListData{User: result}
-
-	tmp := GetTemplates().Lookup("profile_new_barter.html")
-	tmp.Execute(w, data)
-}
-
 func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	// Get the post data from the request.
 	r.ParseForm()
@@ -65,7 +42,7 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	itemDataImagesString := r.FormValue("itemImageDataInput")
 
 	if have == "" || haveCat == "" || need == "" || needCat == "" || location == "" {
-		http.Redirect(w, r, "/newitem?newerror=Fill+out+all+fields", 301)
+		http.Redirect(w, r, "/profile?newerror=Fill+out+all+fields", 301)
 		return
 	}
 
@@ -114,12 +91,12 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = barter.Upsert(conf)
 	if err != nil {
-		http.Redirect(w, r, "/newitem?error=Could+not+save+your+barter", 301)
+		http.Redirect(w, r, "/profile?error=Could+not+save+your+barter", 301)
 		return
 	}
 	log.Println("New barter added")
 	// send a notification to the user that the barter has been added.
-	http.Redirect(w, r, "/newitem", 301)
+	http.Redirect(w, r, "/profile", 301)
 }
 
 func ItemsArchiveHandler(w http.ResponseWriter, r *http.Request) {
