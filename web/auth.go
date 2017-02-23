@@ -50,14 +50,20 @@ var FBOauthConf = &oauth2.Config{
 // }
 
 func SignupPageHandler(w http.ResponseWriter, r *http.Request) {
+	user, err := Userget(r)
+	if err != nil {
+		log.Println(err)
+	}
 
 	data := struct {
 		FBAuthURL     string
 		GoogleAuthURL string
 		LoginError    string
 		SignupError   string
+		User          models.User
 	}{}
 
+	data.User = user
 	// Get the error parameters and respond accordingly
 	data.LoginError = r.URL.Query().Get("loginerror")
 	data.SignupError = r.URL.Query().Get("signuperror")

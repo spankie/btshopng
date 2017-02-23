@@ -1,6 +1,7 @@
 package web
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -11,31 +12,9 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type Data struct {
+type BartersListData struct {
 	User    models.User
 	Barters []models.Barter
-}
-
-func NewItemHandler(w http.ResponseWriter, r *http.Request) {
-
-	user, err := Userget(r)
-	if err != nil {
-		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
-	}
-	//log.Println(user)
-
-	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
-
-	result, err := user.Get(config.GetConf())
-	if err != nil {
-		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
-	}
-	data := Data{User: result}
-
-	tmp := GetTemplates().Lookup("profile_new_barter.html")
-	tmp.Execute(w, data)
 }
 
 func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,13 +24,14 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := Userget(r)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Printf("User error: %+v", err)
 	}
+	conf := config.GetConf()
 
-	result, err := user.Get(config.GetConf())
+	result, err := user.Get(conf)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
-		log.Println("\nUser error:", err, "\n")
+		log.Printf("User error: %+v", err)
 	}
 
 	have := r.FormValue("have")
@@ -59,13 +39,42 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 	need := r.FormValue("need")
 	needCat := r.FormValue("needCat")
 	location := r.FormValue("location")
+	itemDataImagesString := r.FormValue("itemImageDataInput")
 
 	if have == "" || haveCat == "" || need == "" || needCat == "" || location == "" {
-		http.Redirect(w, r, "/newitem?newerror=Fill+out+all+fields", 301)
+		http.Redirect(w, r, "/profile?newerror=Fill+out+all+fields", 301)
 		return
 	}
 
+	itemDataImages := []string{}
+
+	err = json.Unmarshal([]byte(itemDataImagesString), &itemDataImages)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(itemDataImages)
+
+	Images := []models.Image{}
+
+	for _, bas64Image := range itemDataImages {
+		img := models.Image{}
+		imgUUID := uuid.NewV1().String()
+		fullImageName := "product_images/" + imgUUID
+		ThumbnailImageName := "product_thumbnail" + imgUUID
+		img.FullSize, err = UploadBase64Image(conf.S3Bucket, bas64Image, fullImageName, 780)
+		if err != nil {
+			log.Println(err)
+		}
+		img.Thumbnail, err = UploadBase64Image(conf.S3Bucket, bas64Image, ThumbnailImageName, 340)
+		if err != nil {
+			log.Println(err)
+		}
+
+		Images = append(Images, img)
+	}
+
 	uniqueID := uuid.NewV1().String()
+
 	// create a barter model....
 	barter := models.Barter{
 		ID:           uniqueID,
@@ -77,28 +86,25 @@ func SaveNewItemHandler(w http.ResponseWriter, r *http.Request) {
 		Location:     location,
 		DateCreated:  time.Now(),
 		Status:       true,
-		Images:       []string{"", "", ""},
+		Images:       Images,
 	}
 
-	err = barter.Upsert(config.GetConf())
+	err = barter.Upsert(conf)
 	if err != nil {
-		http.Redirect(w, r, "/newitem?error=Could+not+save+your+barter", 301)
+		http.Redirect(w, r, "/profile?error=Could+not+save+your+barter", 301)
 		return
 	}
 	log.Println("New barter added")
 	// send a notification to the user that the barter has been added.
-	http.Redirect(w, r, "/newitem", 301)
+	http.Redirect(w, r, "/profile", 301)
 }
 
-func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
-
+func ItemsArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := Userget(r)
 	if err != nil {
 		// http.Redirect(w, r, "/signup?loginerror=You+are+not+logged+in", 301)
 		log.Println(err)
 	}
-
-	user.FormattedDateCreated = user.DateCreated.Format("Mon, 02 Jan 2006")
 
 	result, err := user.Get(config.GetConf())
 	if err != nil {
@@ -109,14 +115,8 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 	// Supply UserID to be used for retrieving all barters.
 	barter := models.Barter{UserID: result.ID}
 
-	data := Data{User: result}
-
-	// data := struct {
-	// 	User    models.User
-	// 	Barters []models.Barter
-	// }{
-	// 	User: user,
-	// }
+	result.FormattedDateCreated = user.DateCreated.Format("January 2006")
+	data := BartersListData{User: result}
 
 	data.Barters, err = barter.GetAll(config.GetConf())
 	if err != nil {
@@ -128,12 +128,17 @@ func ArchiveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-
+	user, err := Userget(r)
+	if err != nil {
+		log.Println(err)
+	}
 	data := struct {
 		Barters  []models.Barter
 		Query    string
 		Location string
+		User     models.User
 	}{}
+	data.User = user
 
 	searchItem := r.URL.Query()
 
@@ -144,7 +149,6 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	data.Barters = []models.Barter{}
 	barter := models.Barter{}
-	var err error = nil
 
 	data.Barters, err = barter.GetAllSearch(config.GetConf(), data.Query)
 	if err != nil {

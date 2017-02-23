@@ -5,6 +5,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/goamz/goamz/aws"
+	"github.com/goamz/goamz/s3"
+
 	"gopkg.in/mgo.v2"
 )
 
@@ -13,6 +16,8 @@ type Conf struct {
 	MongoDB                string
 	MongoServer            string
 	Database               *mgo.Database
+	S3Bucket               *s3.Bucket
+	S3BucketName           string
 	PasswordEncryptionCost int
 	Encryption             struct {
 		Private []byte
@@ -62,6 +67,17 @@ func Init() {
 		panic(err)
 	}
 
+	auth, err := aws.EnvAuth()
+	if err != nil {
+		log.Fatal(err)
+	}
+	client := s3.New(auth, aws.USWest2)
+	bucketname := os.Getenv("S3_BUCKET_NAME")
+	if bucketname == "" {
+		bucketname = "test-past3"
+	}
+	bucket := client.Bucket(bucketname)
+
 	// Set safeMode of the session
 	// session.SetSafe(&mgo.Safe{})
 
@@ -72,6 +88,8 @@ func Init() {
 		MongoServer:            MONGOSERVER,
 		Database:               session.DB(MONGODB),
 		PasswordEncryptionCost: 10,
+		S3Bucket:               bucket,
+		S3BucketName:           bucketname,
 	}
 
 	// log the database in use

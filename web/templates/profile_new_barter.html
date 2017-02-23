@@ -5,7 +5,7 @@
 
     <body class=" avenir " style="background-color:#f9f9f9">
         <!-- main nav -->
-        {{template "nav_menu"}}
+        {{template "nav_menu" .User}}
         <!-- End main nav -->
         {{template "profile_banner" .User}}
 
@@ -31,58 +31,54 @@
                 <div class="shadow-4 bg-white pt3 mb4">
                   <h3 class="fw4 pa3 pv3">Create a new barter</h3>
                   <div class="pa3 pv2">
-                    <form action="/newitem" method="POST">
-                    <h4 class="fw6 primary">What I have?</h4>
-                    <textarea class="db pt1 w-100" name="have">A macbook or a really good laptop</textarea>
-                    <small class="dark-gray">item category: <select href="dsd" name="haveCat" class="link primary fw6 hover-primary">
-                        <option>laptops and computers</option>
-                        <option>Mobile</option>
-                        <option>Cars</option>
-                      </select>
-                  </small>
-                  </div>
-                  <div class="pa3 pt2 ">
-                    <h4 class="fw6 primary">What I need?</h4>
-                    <textarea class="db pt1 w-100" name="need">A macbook or a really good laptop</textarea>
-                    <small class="dark-gray">item category: <select href="dsd" name="needCat" class="link primary fw6 hover-primary">
-                        <option>laptops and computers</option>
-                        <option>Mobile</option>
-                        <option>Cars</option>
-                      </select>
-                  </small>
-                  </div>
-                  <div class="pa3 pt2 ">
-                    <h4 class="fw6 primary">Your location</h4>
-                    <select class="db pa3 w-100" name="location">
-                      <option>Calabar</option>
-                      <option>Lagos</option>
-                      <option>Port harcourt</option>
-                    </select>
-                  </div>
-                  <div class="cf pt3">
-                    <h4 class="fw6 primary pa3 pv4">Images of the barter item
-                      <small>(if applicable): &nbsp;&nbsp;&nbsp;</small> <label for="itemImages" class="pa2 ba shadow-1 hover-bg-navy hover-white">add image</label>
-                      <input name="itemImages" id="itemImages" class="dn" type="file" multiple/>
-                    </h4>
-                    <a data-lightbox="image-1" data-title="My caption" href="//placehold.it/400x400" class="dib w-third fl pr1">
-                      <img src="//placehold.it/400x400" class="w-100 cover" style="min-height:150px;background-color:#f1f1f1"/>
-                    </a>
-                    <a data-lightbox="image-1" data-title="My caption" href="//placehold.it/400x400" class="dib w-third fl pr1">
-                      <img src="//placehold.it/400x400" class="w-100 cover" style="min-height:150px;background-color:#f1f1f1"/>
-                    </a>
-                    <a data-lightbox="image-1" data-title="My caption" href="//placehold.it/400x400" class="dib w-third fl pr1">
-                      <img src="//placehold.it/400x400" class="w-100 cover" style="min-height:150px;background-color:#f1f1f1"/>
-                    </a>
-                  </div>
-                </div>
-                <!-- end barter item -->
-              </section>
+                    <form action="/profile" method="POST">
+                        <h4 class="fw6 primary">What I have?</h4>
+                        <textarea class="db pt1 w-100" name="have">A macbook or a really good laptop</textarea>
+                        <small class="dark-gray">item category: <select href="dsd" name="haveCat" class="link primary fw6 hover-primary">
+                            <option>laptops and computers</option>
+                            <option>Mobile</option>
+                            <option>Cars</option>
+                          </select>
+                      </small>
+                      </div>
+                      <div class="pa3 pt2 ">
+                        <h4 class="fw6 primary">What I need?</h4>
+                        <textarea class="db pt1 w-100" name="need">A macbook or a really good laptop</textarea>
+                        <small class="dark-gray">item category: <select href="dsd" name="needCat" class="link primary fw6 hover-primary">
+                            <option>laptops and computers</option>
+                            <option>Mobile</option>
+                            <option>Cars</option>
+                          </select>
+                      </small>
+                      </div>
+                      <div class="pa3 pt2 ">
+                        <h4 class="fw6 primary">Your location</h4>
+                        <select class="db pa3 w-100" name="location">
+                          <option>Calabar</option>
+                          <option>Lagos</option>
+                          <option>Port harcourt</option>
+                        </select>
+                      </div>
+                      <div>
+                        <input type="hidden" id="itemImageDataInput" name="itemImageDataInput"/>
+                      </div>
+                      <div class="cf pt3">
+                        <h4 class="fw6 primary pa3 pv4">Images of the barter item
+                          <small>(if applicable): &nbsp;&nbsp;&nbsp;</small>
+                          <label for="itemImagesFileInput" class="pa2 ba shadow-1 hover-bg-navy hover-white">add image</label>
+                          <input name="itemImagesFileInput" id="itemImagesFileInput" class="dn" type="file" multiple/>
+                        </h4>
+                        <div id="itemImagesHolder"></div>
+                      </div>
+                    </div>
+                    <!-- end barter item -->
+                  </section>
 
-            </section>
-            <div class="tc  pa4 cf w-100 db ">
-              <br/>
-              <input type="submit" class="dib link pa3 bg-white shadow-4 ba black v-mid" name="savebarter" value="Submit">
-            </div>
+                </section>
+                <div class="tc  pa4 cf w-100 db ">
+                  <br/>
+                  <input type="submit" class="dib link pa3 bg-white shadow-4 ba black v-mid" name="savebarter" value="Submit">
+                </div>
             </form>
           </section>
         </section>
@@ -108,15 +104,6 @@
           </div>
         </section>
         <!-- End how it works -->
-
-        <!-- Action Button -->
-        <section class="pa5  white cf tc bg-primary" style="">
-          <h3 class="fw1 f2 pv2">Trading has never been this easy</h3>
-          <p class="fw4 f4">Join the community to barter and trade with other like minds</p>
-          <br/>
-          <a href="#" class="dib link ba white pa3 bg-animate hover-bg-white hover-black">Register for free</a>
-        </section>
-        <!-- End Action -->
 
         <!-- call to action Button -->
         {{template "footer_call_to_action"}}

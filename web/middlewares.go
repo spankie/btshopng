@@ -11,8 +11,8 @@ import (
 
 	"context"
 
-	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/btshopng/btshopng/messages"
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
 // Middlewares
@@ -113,7 +113,7 @@ func FrontAuthHandler(next http.Handler) http.Handler {
 			return
 		}
 		tokenValue := cookie.Value
-		log.Println(tokenValue)
+		//log.Println(tokenValue)
 
 		// validate the token
 		token, err := jwt.Parse(tokenValue, func(token *jwt.Token) (interface{}, error) {
@@ -164,6 +164,65 @@ func FrontAuthHandler(next http.Handler) http.Handler {
 		default: // something else went wrong
 			messages.WriteError(w, messages.ErrBadToken)
 			return
+		}
+	}
+	return http.HandlerFunc(fn)
+
+}
+
+//FrontAuthHandler checks if authenticated, and moves the user details from the JWT token into the request context
+func AuthCheckerMiddleware(next http.Handler) http.Handler {
+	ac := config.GetConf()
+	fn := func(w http.ResponseWriter, r *http.Request) {
+
+		// check if we have a cookie with out tokenName
+		//tokenValue := r.Header.Get("X-AUTH-TOKEN")
+		var cookie, err = r.Cookie("AuthToken")
+		if err != nil {
+
+			next.ServeHTTP(w, r)
+			return
+		}
+		tokenValue := cookie.Value
+		//log.Println(tokenValue)
+
+		// validate the token
+		token, err := jwt.Parse(tokenValue, func(token *jwt.Token) (interface{}, error) {
+			publicKey, err := jwt.ParseRSAPublicKeyFromPEM(ac.Encryption.Public)
+
+			if err != nil {
+				return publicKey, err
+			}
+			return publicKey, nil
+		})
+
+		// branch out into the possible error from signing
+		switch err.(type) {
+
+		case nil: // no error
+			if !token.Valid { // but may still be invalid
+				log.Println(err)
+
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				ctx := context.WithValue(r.Context(), "User", claims["User"])
+				r = r.WithContext(ctx)
+				//context.Set(r, "User", claims["User"])
+				//context.Set(r, "UserID", claims["UserID"])
+			} else {
+				log.Println(err)
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			next.ServeHTTP(w, r)
+			return
+
+		default: // something else went wrong
+			next.ServeHTTP(w, r)
 		}
 	}
 	return http.HandlerFunc(fn)

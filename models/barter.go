@@ -20,9 +20,14 @@ type Barter struct {
 	NeedCategory string
 	Location     string
 	DateCreated  time.Time
-	Status       bool     // status of the barter: available or not.
-	Images       []string // array of string to the path where the images will be stored.
+	Status       bool    // status of the barter: available or not.
+	Images       []Image // array of string to the path where the images will be stored.
 
+}
+
+type Image struct {
+	Thumbnail string
+	FullSize  string
 }
 
 // Get returns a particular barter object given the id and user id.
